@@ -1,4 +1,6 @@
 # Fall 2017
+
+## SER321
 ```C
 /**
  * Copyright (c) 2017 Kyler Smith,
@@ -27,4 +29,13 @@
  * @file    <FILE>
  * @date    <MONTH, YEAR>
  **/
+```
+
+## MAT343
+```C
+/** 
+* Copyright (c) 2017 Kyler Smith,
+* Software Engineering,
+* Arizona State University
+*/
 ```
