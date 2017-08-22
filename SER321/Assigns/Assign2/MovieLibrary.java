@@ -18,12 +18,12 @@
  * Or, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,USA
  * <p/>
- * Purpose: <what this file is for>
+ * Purpose: Class that deals with a collection of MovieDescription class
  * <p/>
  * @author Kyler Smith (ksmith91@asu.edu) CIDSE - Software Engineering,
  *                        ASU at the Polytechnic campus
- * @file    <FILE>
- * @date    <MONTH, YEAR>
+ * @file    MovieLibrary.java
+ * @date    <August, 2017>
  **/
 
 
