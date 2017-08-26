@@ -1,3 +1,5 @@
+package movie;
+
 /**
  * Copyright (c) 2017 Kyler Smith,
  * Software Engineering,
@@ -26,9 +28,13 @@
  * @date    <August, 2017>
  **/
 
-
-
 public class MovieLibrary {
+
+/**
+* Properties.
+*/
+	private Object movies[] = new Object[100];
+	private int movieCount = 0;
 
 /**
 * TODO: Implement the following methods.
@@ -39,7 +45,11 @@ public class MovieLibrary {
 	* @return boolean: 1 if added successfully, 0 if not.
 	*/
 	public boolean add(MovieDescription clip) {
-		return false;
+		
+		movies[movieCount] = clip;
+		movieCount++;	
+
+		return true;
 	}
 
 	/**
@@ -69,7 +79,28 @@ public class MovieLibrary {
 	* Entry point for the program.
 	*/
 	public static void main(String[] args) {
+	
+		MovieLibrary mL = new MovieLibrary();
 		
+		MovieDescription mD = new MovieDescription();
+		mD.setTitle("The Avengers");
+		mD.setRating("PG13");
+		mD.setReleased("2013");
+		mD.setRuntime("1:47:53");
+		mD.setPlot("The most well known heroes from the Marvel Universe, battle against enemies and friends.");
+		mD.setFilename("avengers.mp4");
+		String genre[] = new String[2];
+			genre[0] = "action";
+			genre[1] = "adventure";
+		mD.setGenre(genre);
+		String actors[] = new String[3];
+			actors[0] = "Chris Hemsworth";
+			actors[1] = "Scarlet Joe-Handsome";
+			actors[2] = "The Arrow Guy";
+		mD.setActors(actors);
+		
+		mL.add(mD);
+	
 	}
 }
 

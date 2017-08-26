@@ -1,3 +1,4 @@
+package movie;
 
 
 /**
@@ -46,6 +47,23 @@ public class MovieDescription {
 */
 
 	// TODO: Create constructors.
+	public MovieDescription(){};
+
+	public MovieDescription(String title, String rating, String released,
+				String runtime, String plot, String filename,
+				String genre[], String actors[]) {
+		
+		this.title = title;
+		this.rating = rating;
+		this.released = released;
+		this.runtime = runtime;
+		this.plot = plot;
+		this.filename = filename;
+		this.genre = genre;
+		this.actors = actors;
+		
+	}
+
 
 /**
 * Getters.
