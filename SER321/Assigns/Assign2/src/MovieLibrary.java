@@ -30,10 +30,12 @@ package movie;
 
 public class MovieLibrary {
 
+	private static int MAX_MOVIES = 100;
+
 /**
 * Properties.
 */
-	private Object movies[] = new Object[100];
+	private Object movies[] = new Object[MAX_MOVIES];
 	private int movieCount = 0;
 
 /**
@@ -52,19 +54,43 @@ public class MovieLibrary {
 		return true;
 	}
 
-	/**
-	* @param title: The string of the title to remove 
-	* @return boolean: 1 if remove was successful, 0 if not / no title found.
-	*/
-	public boolean remove(String title) {
-		return false;
-	}
+
+       /**
+        * @param title: The string of the title to remove
+        * @return boolean: 1 if remove was successful, 0 if not / no title found.
+        */
+        public boolean remove(String title) {
+               
+                for(int i = 0; i < movieCount; i++) {
+			MovieDescription m = (MovieDescription) movies[i];
+                        if(title.equals(m.getTitle())) {
+                                for(int j = i; j <= movieCount; j++) {
+                                        if(j+1 == movieCount + 1) {
+						movieCount--;
+                                                return true;
+					}
+                                        
+                                        movies[j] = movies[j+1];
+                                }
+				movieCount--;
+                                return true;
+                        }
+                }
+                return false;
+        }
 
 	/**
 	* @param title: A String of the MovieDescription to return.
 	* @return MovieDescription
 	*/
 	public MovieDescription get(String title) {
+
+		for(int i = 0; i < movieCount; i++) {
+			MovieDescription m = (MovieDescription) movies[i];
+			if(title.equals(m.getTitle())) {
+				return (MovieDescription) movies[i];
+			}
+		}
 		return null;
 	}
 
@@ -72,38 +98,16 @@ public class MovieLibrary {
 	* @return String[]: Array of Strings, which are all titles in the library. 
 	*/
 	public String[] getTitles() {
-		return null;
-	}
-
-	/**
-	* Entry point for the program.
-	*/
-	public static void main(String[] args) {
-	
-		MovieLibrary mL = new MovieLibrary();
+		String[] titles = new String[movieCount];
 		
-		MovieDescription mD = new MovieDescription();
-		mD.setTitle("The Avengers");
-		mD.setRating("PG13");
-		mD.setReleased("2013");
-		mD.setRuntime("1:47:53");
-		mD.setPlot("The most well known heroes from the Marvel Universe, battle against enemies and friends.");
-		mD.setFilename("avengers.mp4");
-		String genre[] = new String[2];
-			genre[0] = "action";
-			genre[1] = "adventure";
-		mD.setGenre(genre);
-		String actors[] = new String[3];
-			actors[0] = "Chris Hemsworth";
-			actors[1] = "Scarlet Joe-Handsome";
-			actors[2] = "The Arrow Guy";
-		mD.setActors(actors);
+		for(int i = 0; i < movieCount; i++) {
+			MovieDescription m = (MovieDescription) movies[i]; 
+			titles[i] = m.getTitle();
+		}
 		
-		mL.add(mD);
-	
+		return titles;
 	}
 }
-
 
 
 

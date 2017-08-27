@@ -1,6 +1,5 @@
 package movie;
 
-
 /**
  * Copyright (c) 2017 Kyler Smith,
  * Software Engineering,
@@ -39,9 +38,11 @@ public class MovieDescription {
 	private String runtime;
 	private String plot;
 	private String filename;
-	private String[] genre;
-	private String[] actors;
+	private String[] genres = new String[20];
+	private String[] actors = new String[20];
 
+	private int actorCount = 0;
+	private int genreCount = 0;
 /**
 * Constructors.
 */
@@ -51,7 +52,7 @@ public class MovieDescription {
 
 	public MovieDescription(String title, String rating, String released,
 				String runtime, String plot, String filename,
-				String genre[], String actors[]) {
+				String genre, String actor) {
 		
 		this.title = title;
 		this.rating = rating;
@@ -59,9 +60,11 @@ public class MovieDescription {
 		this.runtime = runtime;
 		this.plot = plot;
 		this.filename = filename;
-		this.genre = genre;
-		this.actors = actors;
-		
+		this.genres[0] = genre;
+		this.actors[0] = actor;
+
+		actorCount++;
+		genreCount++;
 	}
 
 
@@ -75,8 +78,9 @@ public class MovieDescription {
 	public String getRuntime()  { return runtime; }
 	public String getPlot()     { return plot; }
 	public String getFilename() { return filename; }
-	public String[] getGenre() { return genre; }
-	public String[] getActors() { return actors; }
+	
+	public String[] getGenre()    { return genres; }
+	public String[] getActors()   { return actors; }
 
 /**
 * Setters.
@@ -88,17 +92,64 @@ public class MovieDescription {
 	public void setRuntime(String runtime) 	 { this.runtime = runtime; }
 	public void setPlot(String plot) 	 { this.plot = plot; }
 	public void setFilename(String filename) {this.filename = filename; }
-	public void setGenre(String[] genre) 	 { this.genre = genre; }
-	public void setActors(String[] actors) 	 { this.actors = actors; }
-
-/**
-* Main entry point for the program.
-*/
-
-	public static void main(String[] args) {
-		MovieDescription md = new MovieDescription();
+	
+	public void setGenre(String genre) { 
+		this.genres[genreCount] = genre; 
+		genreCount++;
 	}
 
+	public void setActors(String actors) { 
+		this.actors[actorCount] = actors; 
+		actorCount++;
+	}
+
+
+/**
+* Methods
+*/
+
+	public void addGenre(String genre) {
+		this.genres[genreCount] = genre;
+		genreCount++;
+	}
+
+	public void addActor(String actor) {
+		this.actors[actorCount] = actor;
+		actorCount++;
+	}
+
+	public String toString() {
+		
+		String allActors = "";
+		String allGenres = "";
+		
+		for(String s : genres) {
+			if(s == null)
+				break;
+			allGenres += s;	
+			allGenres += " ";	
+		}	
+		for(String s : actors) {
+			if(s == null)
+				break;
+			allActors += s;
+			allActors += " ";
+		}
+
+		return  "\t" + getTitle() + "\n\t" +
+		        getRating() + "\n\t" +
+			getReleased() + "\n\t" +
+			getRuntime() + "\n\t" +
+			getPlot() + "\n\t" +
+			getFilename() + "\n\t" +
+			allActors + "\n\t" + allGenres;
+	}
+
+/**------------------------------------------------------------
+public static void main(String[] args) {
+		MovieDescription md = new MovieDescription();
+	}
+-------------------------------------------------------------*/
 
 }
 
