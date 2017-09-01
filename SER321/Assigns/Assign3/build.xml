@@ -1,0 +1,69 @@
+<!--
+/**
+ * Copyright (c) 2017 Kyler Smith,
+ * Software Engineering,
+ * Arizona State University
+ * <p/>
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation version 2
+ * of the License.
+ * <p/>
+ * This program is distributed in the hope that it will be useful,
+ * but without any warranty or fitness for a particular purpose.
+ * <p/>
+ * Please review the GNU General Public License at:
+ * http://www.gnu.org/licenses/gpl-2.0.html
+ * see also: https://www.gnu.org/licenses/gpl-faq.html
+ * so you are aware of the terms and your rights with regard to this software.
+ * Or, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,USA
+ * <p/>
+ * Purpose: Build file for Assign2
+ * <p/>
+ * @author Kyler Smith (ksmith91@asu.edu) CIDSE - Software Engineering,
+ *                        ASU at the Polytechnic campus
+ * @file    build.xml
+ * @date    <August, 2017>
+ **/
+-->
+
+<project name="Assign3" basedir="." default="main">
+
+	<property name="src.dir"	value="src"/>
+	<property name="classes.dir"	value="classes"/>
+	<property name="jar.dir"	value="jar"/>
+	<property name="main-class"	value="movie.Main"/>
+	
+	<!-- Creates the Assign3/classes dir -->
+	<target name="prepare">
+		<mkdir dir="${classes.dir}"/>
+	</target>
+
+	<!-- Remove the Assign3/classes dir -->
+	<target name="clean">
+		<delete dir="${classes.dir}"/>
+		<delete dir="${jar.dir}"/>
+	</target>
+
+	<!-- Compiles JAVA src code to create class files in Assign3/classes dir -->
+	<target name="build.java" depends="prepare">
+		<javac srcdir="${src.dir}" destdir="${classes.dir}"/>
+	</target>
+	
+	<!-- Creates an executable JAR file to execute the code -->
+	<target name="jar" depends="build.java">
+		<mkdir dir="${jar.dir}"/>
+		<jar destfile="${jar.dir}/${ant.project.name}.jar" basedir="${classes.dir}">
+			<manifest>
+				<attribute name="Main-Class" value="${main-class}"/>
+			</manifest>
+		</jar>
+	</target>
+
+	<!-- Run the executable JAR -->
+	<target name="execute.java" depends="jar">
+		<java jar="${jar.dir}/${ant.project.name}.jar" fork="true"/>
+	</target>
+
+</project>
