@@ -43,6 +43,12 @@ public class MovieLibrary {
 */
 
 	/**
+	* Empty constructor.
+	*/
+	public MovieLibrary(){}
+
+
+	/**
 	* TODO: Implement the following constructors
 	*/
 	public MovieLibrary(String jsonFilename) {

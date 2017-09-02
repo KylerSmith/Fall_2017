@@ -1,5 +1,10 @@
 package movie;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+
+import oracle.adfmf.json;
+
 /**
  * Copyright (c) 2017 Kyler Smith,
  * Software Engineering,
