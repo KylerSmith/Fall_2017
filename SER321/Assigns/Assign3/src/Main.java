@@ -36,9 +36,11 @@ public class Main {
 
 	public static void main(String[] args) {
 		
-		MovieLibrary ml = new MovieLibrary("movies.json");
-		//System.out.println("It worked! Good job, Kyler.");
-	
+		MovieLibrary ml = new MovieLibrary();
+		ml.restoreFromFile();
+		for(String s : ml.getTitles()) {
+			System.out.println(s);
+		}	
 	}
 
 

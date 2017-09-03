@@ -29,6 +29,10 @@ package movie;
  **/
 
 import com.google.gson.GsonBuilder;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.*;
 import java.io.*;
 import java.util.*;
 
@@ -55,17 +59,16 @@ public class MovieLibrary {
 	* TODO: Implement the following constructors
 	*/
 	public MovieLibrary(String jsonFilename) {
-		Map<String, MovieDescription> init;
+		
+		String json = "", line;
 
 		try {
 			FileReader fr = new FileReader(jsonFilename);
 			BufferedReader br = new BufferedReader(fr);
 
-			String file = "", line;
-			while((line = br.readLine()) != null)
-				file += line;
+			while((line = br.readLine()) != null) 
+				json += line;
 
-			System.out.println(file);
 
 			br.close();
 		
@@ -73,11 +76,17 @@ public class MovieLibrary {
 			System.out.println("Exception caught.");
 		}
 	
-
-
-
-
+		Gson gson = new Gson();	
+		
+		Type listType = new TypeToken<Map<String, MovieDescription>>(){}.getType();
+		Map<String, MovieDescription> jsonMap = gson.fromJson(json, listType);
+		
+		for (Map.Entry<String, MovieDescription> entry : jsonMap.entrySet()) {
+    			add(entry.getValue()); // adds ea. MovieDescription obj to array
+			//System.out.println(entry.getValue().toString());
+		}
 	}
+
 
 /**
 * Methods
@@ -154,7 +163,36 @@ public class MovieLibrary {
 	* @return boolean: Whether it was successful or not
 	*/
 	public boolean restoreFromFile() {
-		return false;
+		
+		String json = "", line;
+
+                try {
+                        FileReader fr = new FileReader("movies.json");
+                        BufferedReader br = new BufferedReader(fr);
+
+                        while((line = br.readLine()) != null)
+                                json += line;
+
+
+                        br.close();
+
+                } catch(Exception e) {
+                        System.out.println("Exception caught.");
+                	return false;
+		}
+
+                Gson gson = new Gson();
+
+                Type listType = new TypeToken<Map<String, MovieDescription>>(){}.getType();
+                Map<String, MovieDescription> jsonMap = gson.fromJson(json, listType);
+
+		
+                for (Map.Entry<String, MovieDescription> entry : jsonMap.entrySet()) {
+                	add(entry.getValue());
+			//System.out.println(entry.getValue().toString());
+                }
+		
+		return true;
 	}
 
 	/**

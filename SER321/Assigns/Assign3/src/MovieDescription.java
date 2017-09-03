@@ -36,14 +36,14 @@ public class MovieDescription {
 /**
 * Class properties.
 */
-	private String title;
-	private String rating;
-	private String released;
-	private String runtime;
-	private String plot;
-	private String filename;
-	private String[] genres = new String[20];
-	private String[] actors = new String[20];
+	private String Title;
+	private String Rated;
+	private String Released;
+	private String Runtime;
+	private String Plot;
+	private String Filename;
+	private String[] Genre = new String[20];
+	private String[] Actors = new String[20];
 
 	private int actorCount = 0;
 	private int genreCount = 0;
@@ -57,14 +57,14 @@ public class MovieDescription {
 				String runtime, String plot, String filename,
 				String genre, String actor) {
 		
-		this.title = title;
-		this.rating = rating;
-		this.released = released;
-		this.runtime = runtime;
-		this.plot = plot;
-		this.filename = filename;
-		this.genres[0] = genre;
-		this.actors[0] = actor;
+		this.Title = title;
+		this.Rated = rating;
+		this.Released = released;
+		this.Runtime = runtime;
+		this.Plot = plot;
+		this.Filename = filename;
+		this.Genre[0] = genre;
+		this.Actors[0] = actor;
 
 		actorCount++;
 		genreCount++;
@@ -85,34 +85,34 @@ public class MovieDescription {
 * Getters.
 */
 	
-	public String getTitle()    { return title; }
-	public String getRating()   { return rating; }
-	public String getReleased() { return released; }
-	public String getRuntime()  { return runtime; }
-	public String getPlot()     { return plot; }
-	public String getFilename() { return filename; }
+	public String getTitle()    { return Title; }
+	public String getRating()   { return Rated; }
+	public String getReleased() { return Released; }
+	public String getRuntime()  { return Runtime; }
+	public String getPlot()     { return Plot; }
+	public String getFilename() { return Filename; }
 	
-	public String[] getGenre()    { return genres; }
-	public String[] getActors()   { return actors; }
+	public String[] getGenre()    { return Genre; }
+	public String[] getActors()   { return Actors; }
 
 /**
 * Setters.
 */
 
-	public void setTitle(String title)       { this.title = title; }
-	public void setRating(String rating) 	 { this.rating = rating; }
-	public void setReleased(String released) { this.released = released; }
-	public void setRuntime(String runtime) 	 { this.runtime = runtime; }
-	public void setPlot(String plot) 	 { this.plot = plot; }
-	public void setFilename(String filename) {this.filename = filename; }
+	public void setTitle(String title)       { this.Title = title; }
+	public void setRating(String rating) 	 { this.Rated = rating; }
+	public void setReleased(String released) { this.Released = released; }
+	public void setRuntime(String runtime) 	 { this.Runtime = runtime; }
+	public void setPlot(String plot) 	 { this.Plot = plot; }
+	public void setFilename(String filename) {this.Filename = filename; }
 	
 	public void setGenre(String genre) { 
-		this.genres[genreCount] = genre; 
+		this.Genre[genreCount] = genre; 
 		genreCount++;
 	}
 
 	public void setActors(String actors) { 
-		this.actors[actorCount] = actors; 
+		this.Actors[actorCount] = actors; 
 		actorCount++;
 	}
 
@@ -126,7 +126,7 @@ public class MovieDescription {
 	* @param genre: String name of the genre to add
 	*/
 	public void addGenre(String genre) {
-		this.genres[genreCount] = genre;
+		this.Genre[genreCount] = genre;
 		genreCount++;
 	}
 
@@ -135,7 +135,7 @@ public class MovieDescription {
 	* @param actor: String of the name of actor to add
 	*/
 	public void addActor(String actor) {
-		this.actors[actorCount] = actor;
+		this.Actors[actorCount] = actor;
 		actorCount++;
 	}
 
@@ -147,20 +147,20 @@ public class MovieDescription {
 		String allActors = "";
 		String allGenres = "";
 		
-		for(String s : genres) {
+		for(String s : Genre) {
 			if(s == null)
 				break;
 			allGenres += s;	
 			allGenres += " ";	
 		}	
-		for(String s : actors) {
+		for(String s : Actors) {
 			if(s == null)
 				break;
 			allActors += s;
 			allActors += " ";
 		}
 
-		return  "\t" + getTitle() + "\n\t" +
+		return  getTitle() + "\n\t" +
 		        getRating() + "\n\t" +
 			getReleased() + "\n\t" +
 			getRuntime() + "\n\t" +
