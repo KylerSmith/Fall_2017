@@ -28,6 +28,10 @@ package movie;
  * @date    <August, 2017>
  **/
 
+import com.google.gson.GsonBuilder;
+import java.io.*;
+import java.util.*;
+
 public class MovieLibrary {
 
 	private static int MAX_MOVIES = 100;
@@ -41,7 +45,6 @@ public class MovieLibrary {
 /**
 * Constructors
 */
-
 	/**
 	* Empty constructor.
 	*/
@@ -52,7 +55,28 @@ public class MovieLibrary {
 	* TODO: Implement the following constructors
 	*/
 	public MovieLibrary(String jsonFilename) {
+		Map<String, MovieDescription> init;
+
+		try {
+			FileReader fr = new FileReader(jsonFilename);
+			BufferedReader br = new BufferedReader(fr);
+
+			String file = "", line;
+			while((line = br.readLine()) != null)
+				file += line;
+
+			System.out.println(file);
+
+			br.close();
 		
+		} catch(Exception e) {
+			System.out.println("Exception caught.");
+		}
+	
+
+
+
+
 	}
 
 /**

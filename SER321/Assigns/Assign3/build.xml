@@ -19,52 +19,128 @@
  * Or, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,USA
  * <p/>
- * Purpose: Build file for Assign2
+ * Purpose: executing ant on Assign3
  * <p/>
  * @author Kyler Smith (ksmith91@asu.edu) CIDSE - Software Engineering,
  *                        ASU at the Polytechnic campus
  * @file    build.xml
- * @date    <August, 2017>
+ * @date    <September, 2017>
  **/
 -->
 
-<project name="Assign3" basedir="." default="main">
 
-	<property name="src.dir"	value="src"/>
-	<property name="classes.dir"	value="classes"/>
-	<property name="jar.dir"	value="jar"/>
-	<property name="lib.dir"	value="lib"/>
-	<property name="main-class"	value="movie.Main"/>
-	
-	<!-- Creates the Assign3/classes dir -->
-	<target name="prepare">
-		<mkdir dir="${classes.dir}"/>
-	</target>
+<project name="Assign3"
+         default="targets" basedir="."
+         xmlns="antlib:org.apache.tools.ant">
+   <taskdef resource="net/sf/antcontrib/antcontrib.properties"/>
 
-	<!-- Remove the Assign3/classes dir -->
-	<target name="clean">
-		<delete dir="${classes.dir}"/>
-		<delete dir="${jar.dir}"/>
-	</target>
+   <property name="src.dir" value="./src" />
+   <property name="classes.dir" value="./classes" />
+   <property name="lib.dir" value="./lib" />
+   <property environment="env"/>
 
-	<!-- Compiles JAVA src code to create class files in Assign3/classes dir -->
-	<target name="build.java" depends="prepare">
-		<javac srcdir="${src.dir}" destdir="${classes.dir}"/>
-	</target>
-	
-	<!-- Creates an executable JAR file to execute the code -->
-	<target name="jar" depends="build.java">
-		<mkdir dir="${jar.dir}"/>
-		<jar destfile="${jar.dir}/${ant.project.name}.jar" basedir="${classes.dir}">
-			<manifest>
-				<attribute name="Main-Class" value="${main-class}"/>
-			</manifest>
-		</jar>
-	</target>
+   <path id="compile.classpath">
+      <pathelement location="./${classes.dir}"/>
+      <pathelement path="${lib.dir}/gson.jar"/>
+   </path>
 
-	<!-- Run the executable JAR -->
-	<target name="execute.java" depends="jar">
-		<java jar="${jar.dir}/${ant.project.name}.jar" fork="true"/>
-	</target>
+   <target name="targets">
+     <echo message="targets are clean, prepare, build.java, execute.java"/>
+   </target>
+
+   <target name="prepare">
+      <!-- Create the time stamp -->
+      <tstamp/>
+      <!-- Create the build directory structure used by compile -->
+      <echo message="home defined as: ${env.HOME}" />
+      <mkdir dir="${classes.dir}" />
+      <if>
+         <isset property="env.USERNAME"/>
+         <then>
+            <echo message="detected username is: ${env.USERNAME}"/>
+         </then>
+      <elseif>
+         <isset property="env.USER"/>
+         <then>
+            <echo message="detected user is: ${env.USER}"/>
+         </then>
+      </elseif>
+      </if>
+      <echo message="host name is: ${os.name}"/>
+      <echo message="host arch is: ${os.arch}"/>
+      <echo message="host version is: ${os.version}"/>
+      <echo message="base directory is: ${basedir}"/>
+
+      <!-- Platform identification -->
+      <condition property="build.host.islinux">
+        <and>
+          <os family="unix" />
+          <not>
+            <contains string="${os.name}" substring="mac"
+                      casesensitive="false" />
+          </not>
+        </and>
+      </condition>
+      <condition property="build.host.platform" value="linux">
+        <isset property="build.host.islinux" />
+      </condition>
+
+      <condition property="build.host.ismac">
+        <and>
+          <os family="unix" />
+          <contains string="${os.name}" substring="mac" casesensitive="false"/>
+        </and>
+      </condition>
+      <condition property="build.host.platform" value="mac">
+        <isset property="build.host.ismac" />
+      </condition>
+
+      <fail unless="build.host.platform"
+            message="Building on ${os.name} is not supported" />
+      <echo message="build.host.platform is: ${build.host.platform}"/>
+      <if>
+         <isset property="build.host.ismac"/>
+         <then>
+            <echo message="detected a mac host"/>
+            <property name="includepath" value="/opt/local/include:/usr/local/include"/>
+            <property name="client.lib.path" value="/opt/local/lib"/>
+            <property name="client.lib.list" value="c++,jsoncpp,stdc++"/>
+         </then>
+      <elseif>
+         <isset property="build.host.islinux"/>
+         <then>
+            <echo message="detected a linux host"/>
+            <property name="includepath" value="/usr/include/jsoncpp"/>
+            <property name="client.lib.path" value="/usr/local/lib"/>
+            <property name="client.lib.list" value="jsoncpp,stdc++"/>
+         </then>
+      </elseif>
+      <else>
+         <echo message="failed to detect a host I know how to build on"/>
+      </else>
+   </if>
+   </target>
+
+   <target name="build.java" depends="prepare"
+           description="Compile Java sources">
+      <javac srcdir="${src.dir}"
+             includeantruntime="false"
+             destdir="${classes.dir}">
+         <classpath refid="compile.classpath"/>
+      </javac>
+   </target>
+
+   <target name="execute.java" depends="build.java"
+           description="Start program">
+         <echo message="user.dir is: ${user.dir}"/>
+         <echo message="command line execute: java -cp classes:lib/gson.jar movie.Main" />
+         <java classname="movie.Main" fork="yes">
+           <classpath refid="compile.classpath"/>
+         </java>
+   </target>
+
+   <target name="clean">
+     <delete dir="${classes.dir}" />
+   </target>
 
 </project>

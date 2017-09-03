@@ -1,9 +1,8 @@
 package movie;
 
+import com.google.gson.Gson;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-
-import oracle.adfmf.json;
 
 /**
  * Copyright (c) 2017 Kyler Smith,
@@ -72,10 +71,11 @@ public class MovieDescription {
 	}
 
 	// TODO: following constructors
-	public MovieDescription(JSONObject jsonObj) {
-		
-	}
-	
+/**
+*	public MovieDescription(JSONObject jsonObj) {
+*		
+*	}
+**/	
 	public MovieDescription(String jsonObjAsString) {
 
 	}
@@ -174,9 +174,11 @@ public class MovieDescription {
 	* TODO: Implement method to turn MovieDescription obj to a JSONObject
 	* @return JSONObject: JSONObject representation of MovieDescription obj
 	*/
-	public JSONObject toJson() {
-		return null;
-	}
+/**	public JSONObject toJson() {
+*		return null;
+*	}
+**/
+
 }
 
 
