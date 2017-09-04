@@ -31,9 +31,8 @@ package movie;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 
+import java.util.*;
 
 public class MovieDescription {	
 /**
@@ -77,7 +76,7 @@ public class MovieDescription {
 
 	public MovieDescription(String content) {
 		JsonObject val = new Gson().fromJson(content, JsonObject.class);
-		//System.out.println(val.toString());
+		System.out.println("\t" + val.toString());
 	
 		this.Title = val.get("Title").toString();
 		this.Rated = val.get("Rated").toString();
