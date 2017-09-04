@@ -56,7 +56,7 @@ public class MovieLibrary {
 
 
 	/**
-	* TODO: Implement the following constructors
+	* TODO: Implement the following constructor
 	*/
 	public MovieLibrary(String jsonFilename) {
 		
@@ -78,7 +78,11 @@ public class MovieLibrary {
 	
 		Gson gson = new Gson();	
 		
+		/** I got this line from the google docs
+		* https://google.github.io/gson/apidocs/com/google/gson/reflect/TypeToken.html
+		*/
 		Type listType = new TypeToken<Map<String, MovieDescription>>(){}.getType();
+		
 		Map<String, MovieDescription> jsonMap = gson.fromJson(json, listType);
 		
 		for (Map.Entry<String, MovieDescription> entry : jsonMap.entrySet()) {
@@ -185,11 +189,9 @@ public class MovieLibrary {
 
                 Type listType = new TypeToken<Map<String, MovieDescription>>(){}.getType();
                 Map<String, MovieDescription> jsonMap = gson.fromJson(json, listType);
-
 		
                 for (Map.Entry<String, MovieDescription> entry : jsonMap.entrySet()) {
                 	add(entry.getValue());
-			//System.out.println(entry.getValue().toString());
                 }
 		
 		return true;
@@ -199,8 +201,22 @@ public class MovieLibrary {
 	* Serializes the MovieLibrary obj into JSON and writes to movies.json
 	* @return boolean: Whether it was successful or not.
 	*/
-	public boolean saveToFile() {
-		return false;
+	public boolean saveToFile() throws IOException {
+		MovieDescription tmp = null;
+		Map<String, MovieDescription> jsonMap = new HashMap<>();
+
+		for(int i = 0; i < movieCount; i++) {
+			tmp = (MovieDescription) movies[i];
+			jsonMap.put(tmp.getTitle(), tmp);
+		}
+		
+		String allJson = new GsonBuilder().setPrettyPrinting().create().toJson(jsonMap);
+		
+		BufferedWriter bw = new BufferedWriter(new FileWriter("movies.json"));
+    		bw.write(allJson);
+   		bw.close();
+
+		return true;
 	}
 
 }

@@ -1,9 +1,5 @@
 package movie;
 
-import com.google.gson.Gson;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-
 /**
  * Copyright (c) 2017 Kyler Smith,
  * Software Engineering,
@@ -32,21 +28,29 @@ import java.io.DataOutputStream;
  * @date    <August, 2017>
  **/
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+
+
 public class MovieDescription {	
 /**
 * Class properties.
 */
-	private String Title;
-	private String Rated;
-	private String Released;
-	private String Runtime;
-	private String Plot;
-	private String Filename;
-	private String[] Genre = new String[20];
-	private String[] Actors = new String[20];
+	private String Title = "";
+	private String Rated = "";
+	private String Released = "";
+	private String Runtime = "";
+	private String Plot = "";
+	private String Filename = "";
 
-	private int actorCount = 0;
-	private int genreCount = 0;
+	private String[] Genre = new String[20];
+        private String[] Actors = new String[20];
+
+        private int actorCount = 0;
+        private int genreCount = 0;
 /**
 * Constructors.
 */
@@ -70,14 +74,23 @@ public class MovieDescription {
 		genreCount++;
 	}
 
-	// TODO: following constructors
-/**
-*	public MovieDescription(JSONObject jsonObj) {
-*		
-*	}
-**/	
-	public MovieDescription(String jsonObjAsString) {
 
+	public MovieDescription(String content) {
+		JsonObject val = new Gson().fromJson(content, JsonObject.class);
+		//System.out.println(val.toString());
+	
+		this.Title = val.get("Title").toString();
+		this.Rated = val.get("Rated").toString();
+		this.Released = val.get("Released").toString();
+		this.Runtime = val.get("Runtime").toString();
+		this.Plot = val.get("Plot").toString();
+		
+		if(val.has("Filename"))
+			this.Filename = val.get("Filename").toString();
+		
+		this.Actors[0] = val.get("Actors").toString();	
+		this.Genre[0] = val.get("Genre").toString();
+		
 	}
 
 
@@ -104,13 +117,12 @@ public class MovieDescription {
 	public void setReleased(String released) { this.Released = released; }
 	public void setRuntime(String runtime) 	 { this.Runtime = runtime; }
 	public void setPlot(String plot) 	 { this.Plot = plot; }
-	public void setFilename(String filename) {this.Filename = filename; }
+	public void setFilename(String filename) { this.Filename = filename; }
 	
 	public void setGenre(String genre) { 
 		this.Genre[genreCount] = genre; 
-		genreCount++;
+		actorCount++;
 	}
-
 	public void setActors(String actors) { 
 		this.Actors[actorCount] = actors; 
 		actorCount++;
@@ -122,37 +134,19 @@ public class MovieDescription {
 */
 
 	/**
-	* Adds a genre to the MovieDescription object
-	* @param genre: String name of the genre to add
-	*/
-	public void addGenre(String genre) {
-		this.Genre[genreCount] = genre;
-		genreCount++;
-	}
-
-	/**
-	* Adds an actor to the MovieDescription obj
-	* @param actor: String of the name of actor to add
-	*/
-	public void addActor(String actor) {
-		this.Actors[actorCount] = actor;
-		actorCount++;
-	}
-
-	/**
 	* Returns a String version of the MovieDescription obj
 	*/
 	public String toString() {
-		
+
 		String allActors = "";
 		String allGenres = "";
-		
+
 		for(String s : Genre) {
 			if(s == null)
 				break;
-			allGenres += s;	
-			allGenres += " ";	
-		}	
+			allGenres += s;
+			allGenres += " ";
+		}
 		for(String s : Actors) {
 			if(s == null)
 				break;
@@ -166,18 +160,17 @@ public class MovieDescription {
 			getRuntime() + "\n\t" +
 			getPlot() + "\n\t" +
 			getFilename() + "\n\t" +
-			allActors + "\n\t" + allGenres;
+			allGenres + "\n\t" + allActors;
 	}
 
 
 	/**
-	* TODO: Implement method to turn MovieDescription obj to a JSONObject
-	* @return JSONObject: JSONObject representation of MovieDescription obj
+	* @return Gson: Gson representation of MovieDescription obj
 	*/
-/**	public JSONObject toJson() {
-*		return null;
-*	}
-**/
+	public String toJson() {
+		return new GsonBuilder().create().toJson(this);
+	}
+
 
 }
 

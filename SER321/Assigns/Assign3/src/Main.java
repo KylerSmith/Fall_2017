@@ -29,21 +29,73 @@ package movie;
  **/
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+import java.lang.reflect.*;
+import java.io.*;
+import java.net.*;
 
 
 public class Main {
 
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		
-		MovieLibrary ml = new MovieLibrary();
-		ml.restoreFromFile();
-		for(String s : ml.getTitles()) {
-			System.out.println(s);
-		}	
+		MovieLibrary ml = new MovieLibrary("movies.json");
+		
+		BufferedReader stdin = new BufferedReader(
+			new InputStreamReader(System.in));
+		
+		String userInput = stdin.readLine();
+		while(!userInput.equals("end")) {
+			if(userInput.equals("save")) {
+				System.out.println("Writing ML to file.");
+				ml.saveToFile();
+			} else if(userInput.equals("restore")) {
+				System.out.println("Restoring from file.");
+				ml.restoreFromFile();
+			} else if(userInput.substring(0, 6).equals("search")) {
+				System.out.println("Search for: " + userInput.substring(7));
+				String title = userInput.substring(7);
+				title.replaceAll("\\s+","");
+				ml.add(searchTitle(title));
+			} else {
+				System.out.println("Invalid entry, try again.");
+				System.out.println("Your options are save, restore, search <title> and end.");
+			}
+			
+			userInput = stdin.readLine();
+		}
 	}
 
 
+
+	public static MovieDescription searchTitle(String s) {
+		// http://www.omdbapi.com/?apikey=cdb16783&t=< String to search >
+		URL url;
+		String tmp, content = "";
+
+		try {
+			url = new URL("http://www.omdbapi.com/?apikey=cdb16783&t=" + s);
+			URLConnection connection = url.openConnection();
+			BufferedReader br = 
+				new BufferedReader(new InputStreamReader(
+				connection.getInputStream())
+			);
+			
+			while((tmp = br.readLine()) != null)
+				content += tmp;
+			
+			br.close();
+			
+		} catch(Exception e) {
+			return null;
+		}	
+		
+		return new MovieDescription(content);
+	}
+
+	
 }
 
 
