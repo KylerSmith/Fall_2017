@@ -201,7 +201,7 @@ public class MovieLibrary {
 	* Serializes the MovieLibrary obj into JSON and writes to movies.json
 	* @return boolean: Whether it was successful or not.
 	*/
-	public boolean saveToFile() throws IOException {
+	public boolean saveToFile(String filename) throws IOException {
 		MovieDescription tmp = null;
 		Map<String, MovieDescription> jsonMap = new HashMap<>();
 
@@ -212,7 +212,7 @@ public class MovieLibrary {
 		
 		String allJson = new GsonBuilder().setPrettyPrinting().create().toJson(jsonMap);
 		
-		BufferedWriter bw = new BufferedWriter(new FileWriter("movies.json"));
+		BufferedWriter bw = new BufferedWriter(new FileWriter(filename));
     		bw.write(allJson);
    		bw.close();
 
