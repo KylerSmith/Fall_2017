@@ -77,14 +77,14 @@ public class MovieDescription {
 	public MovieDescription(String content) {
 		JsonObject val = new Gson().fromJson(content, JsonObject.class);
 	
-		this.Title = val.get("Title").toString();
-		this.Rated = val.get("Rated").toString();
-		this.Released = val.get("Released").toString();
-		this.Runtime = val.get("Runtime").toString();
-		this.Plot = val.get("Plot").toString();
+		this.Title = val.get("Title").toString().replace("\"", "");
+		this.Rated = val.get("Rated").toString().replace("\"", "");
+		this.Released = val.get("Released").toString().replace("\"", "");
+		this.Runtime = val.get("Runtime").toString().replace("\"", "");
+		this.Plot = val.get("Plot").toString().replace("\"", "");
 		
 		if(val.has("Filename"))
-			this.Filename = val.get("Filename").toString();
+			this.Filename = val.get("Filename").toString().replace("\"", "");
 		
 		
 		String actorString = val.get("Actors").toString();

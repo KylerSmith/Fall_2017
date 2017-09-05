@@ -28,6 +28,7 @@ package movie;
  * @date    <September, 2017>
  **/
 
+import com.google.gson.JsonObject;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -38,7 +39,6 @@ import java.net.*;
 
 public class Main {
 
-
 	public static void main(String[] args) throws IOException {
 		
 		MovieLibrary ml = new MovieLibrary("movies.json");
@@ -48,23 +48,34 @@ public class Main {
 		
 		String userInput = stdin.readLine();
 		while(!userInput.equals("end")) {
+
 			if(userInput.equals("save")) {
-				System.out.println("Writing ML to file.");
-				ml.saveToFile();
+				System.out.println("Writing Music Library to 'movies.json'.");
+				ml.saveToFile("movies.json");
 			} else if(userInput.equals("restore")) {
 				System.out.println("Restoring from file.");
 				ml.restoreFromFile();
-			} else if(userInput.substring(0, 6).equals("search")) {
+			} else if( (userInput.length() > 5) && (userInput.substring(0, 6).equals("search")) ) {
 				System.out.println("Search for: " + userInput.substring(7));
 				String title = userInput.substring(7);
 				title.replaceAll("\\s+","");
-				ml.add(searchTitle(title));
+
+				MovieDescription md = searchTitle(title);
+
+				if(md != null)
+					ml.add(md); 
+
 			} else {
 				System.out.println("Invalid entry, try again.");
 				System.out.println("Your options are save, restore, search <title> and end.");
 			}
 			
 			userInput = stdin.readLine();
+
+			if(userInput.equals("end")) {
+				System.out.println("Writing Music Library to 'movieSave.json' and exiting.");
+				ml.saveToFile("movieSave.json");
+			}	
 		}
 	}
 
@@ -92,26 +103,19 @@ public class Main {
 			return null;
 		}	
 		
+		JsonObject jsonObj = new Gson().fromJson(content, JsonObject.class);
+		
+		if(jsonObj.has("Error")) {
+			System.out.println("Movie not found!");
+			return null;
+		}
+		
+		System.out.println("Adding movie: " + jsonObj.get("Title") + " to Music Library.");
 		return new MovieDescription(content);
 	}
 
 	
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
