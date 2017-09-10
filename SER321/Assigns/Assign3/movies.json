@@ -1,34 +1,74 @@
 {
-  "Pretty Woman": {
-    "Title": "Pretty Woman",
-    "Rated": "NR",
-    "Released": "10 Dec 1973",
-    "Runtime": "3 min",
-    "Plot": "One of Roys most famous songs.",
-    "Filename": "RoyOrbisonPrettyWoman.mp4",
+  "Squatters Rights": {
+    "Title": "Squatters Rights",
+    "Rated": "N/A",
+    "Released": "07 Jun 1946",
+    "Runtime": "7 min",
+    "Plot": "Chip-n-Dale have set up house in the wood stove of Mickeys cabin. Pluto knows they are there, but Mickey only knows his matches keep going out when he tries to light a fire.",
+    "Filename": "MMSquattersRights.mp4",
     "Genre": [
-      "Country Music"
+      "Cartoon",
+      "Animation",
+      "Family"
     ],
     "Actors": [
-      "Roy Orbison"
+      "Dessie Flynn",
+      "James MacDonald"
     ]
   },
-  "Hello": {
-    "Title": "Hello",
-    "Rated": "N/A",
-    "Released": "10 Oct 2008",
-    "Runtime": "129 min",
-    "Plot": "Hello... is a tale about the events that happen one night at a call center. Told through the views of the protagonist, Shyam, it is a story of almost lost love, thwarted ambitions, absence ...",
+  "Batman": {
+    "Title": "Batman",
+    "Rated": "PG-13",
+    "Released": "23 Jun 1989",
+    "Runtime": "126 min",
+    "Plot": "The Dark Knight of Gotham City begins his war on crime with his first major enemy being the clownishly homicidal Joker.",
     "Filename": "",
     "Genre": [
-      "Drama",
-      "Romance"
+      "Action",
+      "Adventure"
     ],
     "Actors": [
-      "BhartiAchrekar",
-      "AmritaArora",
-      "SharmanJoshi",
-      "KatrinaKaif"
+      "MichaelKeaton",
+      "JackNicholson",
+      "KimBasinger",
+      "RobertWuhl"
+    ]
+  },
+  "Mad Max: Fury Road": {
+    "Title": "Mad Max: Fury Road",
+    "Rated": "R",
+    "Released": "15 May 2015",
+    "Runtime": "120 min",
+    "Plot": "A woman rebels against a tyrannical ruler in postapocalyptic Australia in search for her home-land with the help of a group of female prisoners, a psychotic worshipper, and a drifter named Max.",
+    "Filename": "",
+    "Genre": [
+      "Action",
+      "Adventure",
+      "Sci-Fi"
+    ],
+    "Actors": [
+      "TomHardy",
+      "CharlizeTheron",
+      "NicholasHoult",
+      "HughKeays-Byrne"
+    ]
+  },
+  "Minions Banana": {
+    "Title": "Minions Banana",
+    "Rated": "PG",
+    "Released": "12 Dec 2015",
+    "Runtime": "5 min",
+    "Plot": "Minions fight over a banana. In the process, they wreak havoc in the Bomb Factory.",
+    "Filename": "MinionsBanana.mp4",
+    "Genre": [
+      "Animation",
+      "Family",
+      "Cartoon"
+    ],
+    "Actors": [
+      "Steve",
+      "Kevin",
+      "Stuart"
     ]
   },
   "Minions Banana Song": {
@@ -50,39 +90,35 @@
       "Stuart"
     ]
   },
-  "Squatters Rights": {
-    "Title": "Squatters Rights",
-    "Rated": "N/A",
-    "Released": "07 Jun 1946",
-    "Runtime": "7 min",
-    "Plot": "Chip-n-Dale have set up house in the wood stove of Mickeys cabin. Pluto knows they are there, but Mickey only knows his matches keep going out when he tries to light a fire.",
-    "Filename": "MMSquattersRights.mp4",
+  "Pretty Woman": {
+    "Title": "Pretty Woman",
+    "Rated": "NR",
+    "Released": "10 Dec 1973",
+    "Runtime": "3 min",
+    "Plot": "One of Roys most famous songs.",
+    "Filename": "RoyOrbisonPrettyWoman.mp4",
     "Genre": [
-      "Cartoon",
-      "Animation",
-      "Family"
+      "Country Music"
     ],
     "Actors": [
-      "Dessie Flynn",
-      "James MacDonald"
+      "Roy Orbison"
     ]
   },
-  "Minions Banana": {
-    "Title": "Minions Banana",
-    "Rated": "PG",
-    "Released": "12 Dec 2015",
-    "Runtime": "5 min",
-    "Plot": "Minions fight over a banana. In the process, they wreak havoc in the Bomb Factory.",
-    "Filename": "MinionsBanana.mp4",
+  "Minions Puppy": {
+    "Title": "Minions Puppy",
+    "Rated": "NR",
+    "Released": "10 Dec 2013",
+    "Runtime": "4:16 min",
+    "Plot": "Dave seeing many owners walk their dogs wants a puppy of his own. He finds a mini-UFO who becomes his pal. This short film released with Despicable Me 2 chronicles how Dave helps the UFO return home.",
+    "Filename": "MinionsPuppy.mp4",
     "Genre": [
       "Animation",
       "Family",
       "Cartoon"
     ],
     "Actors": [
-      "Steve",
-      "Kevin",
-      "Stuart"
+      "Dave",
+      "Gru"
     ]
   },
   "HomeBrew": {
@@ -103,40 +139,39 @@
       "SusanBaskerville"
     ]
   },
-  "Save the Last Dance": {
-    "Title": "Save the Last Dance",
-    "Rated": "PG-13",
-    "Released": "12 Jan 2001",
-    "Runtime": "112 min",
-    "Plot": "A white midwestern girl moves to Chicago, where her new boyfriend is a black teen from the South Side with a rough, semi-criminal past.",
+  "Cool": {
+    "Title": "Cool",
+    "Rated": "N/A",
+    "Released": "06 Dec 2007",
+    "Runtime": "100 min",
+    "Plot": "The film follows the parallel and entwining stories as well as the common fates of some very different young people for 24 hours in the summertime: from the prison to the corridors of the ...",
+    "Filename": "",
+    "Genre": [
+      "Comedy"
+    ],
+    "Actors": [
+      "YannisTsimitselis",
+      "VassoKavalieratou",
+      "AndreasKonstantinou",
+      "EftyhiaYakoumi"
+    ]
+  },
+  "Hello": {
+    "Title": "Hello",
+    "Rated": "N/A",
+    "Released": "10 Oct 2008",
+    "Runtime": "129 min",
+    "Plot": "Hello... is a tale about the events that happen one night at a call center. Told through the views of the protagonist, Shyam, it is a story of almost lost love, thwarted ambitions, absence ...",
     "Filename": "",
     "Genre": [
       "Drama",
-      "Music",
       "Romance"
     ],
     "Actors": [
-      "JuliaStiles",
-      "SeanPatrickThomas",
-      "KerryWashington",
-      "FredroStarr"
-    ]
-  },
-  "Minions Puppy": {
-    "Title": "Minions Puppy",
-    "Rated": "NR",
-    "Released": "10 Dec 2013",
-    "Runtime": "4:16 min",
-    "Plot": "Dave seeing many owners walk their dogs wants a puppy of his own. He finds a mini-UFO who becomes his pal. This short film released with Despicable Me 2 chronicles how Dave helps the UFO return home.",
-    "Filename": "MinionsPuppy.mp4",
-    "Genre": [
-      "Animation",
-      "Family",
-      "Cartoon"
-    ],
-    "Actors": [
-      "Dave",
-      "Gru"
+      "BhartiAchrekar",
+      "AmritaArora",
+      "SharmanJoshi",
+      "KatrinaKaif"
     ]
   },
   "Dragon Ball Z": {
@@ -158,23 +193,23 @@
       "SeanSchemmel"
     ]
   },
-  "Mad Max: Fury Road": {
-    "Title": "Mad Max: Fury Road",
-    "Rated": "R",
-    "Released": "15 May 2015",
-    "Runtime": "120 min",
-    "Plot": "A woman rebels against a tyrannical ruler in postapocalyptic Australia in search for her home-land with the help of a group of female prisoners, a psychotic worshipper, and a drifter named Max.",
+  "Save the Last Dance": {
+    "Title": "Save the Last Dance",
+    "Rated": "PG-13",
+    "Released": "12 Jan 2001",
+    "Runtime": "112 min",
+    "Plot": "A white midwestern girl moves to Chicago, where her new boyfriend is a black teen from the South Side with a rough, semi-criminal past.",
     "Filename": "",
     "Genre": [
-      "Action",
-      "Adventure",
-      "Sci-Fi"
+      "Drama",
+      "Music",
+      "Romance"
     ],
     "Actors": [
-      "TomHardy",
-      "CharlizeTheron",
-      "NicholasHoult",
-      "HughKeays-Byrne"
+      "JuliaStiles",
+      "SeanPatrickThomas",
+      "KerryWashington",
+      "FredroStarr"
     ]
   }
 }
