@@ -61,8 +61,14 @@
 		</jar>
 	</target>
 
-	<!-- Run the executable JAR -->
-	<target name="execute.java" depends="jar">
+	<!-- Build and run the executable JAR -->
+	<target name="execute.java" depends="build.java">
+		<mkdir dir="${jar.dir}"/>
+		<jar destfile="${jar.dir}/${ant.project.name}.jar" basedir="${classes.dir}">
+			<manifest>
+				<attribute name="Main-Class" value="${main-class}"/>
+			</manifest>
+		</jar>
 		<java jar="${jar.dir}/${ant.project.name}.jar" fork="true"/>
 	</target>
 
