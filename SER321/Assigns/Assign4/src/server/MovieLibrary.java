@@ -1,4 +1,15 @@
-package movie;
+package movie.server;
+
+import com.google.gson.GsonBuilder;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
+import java.lang.reflect.*;
+import java.io.*;
+import java.util.*;
+import java.net.*;
+import edu.asu.ser.jsonrpc.common.JsonRpcException;
+
 
 /**
  * Copyright (c) 2017 Kyler Smith,
@@ -28,15 +39,7 @@ package movie;
  * @date    <August, 2017>
  **/
 
-import com.google.gson.GsonBuilder;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import java.lang.reflect.*;
-import java.io.*;
-import java.util.*;
-
-public class MovieLibrary {
+public class MovieLibrary implements MovieLibraryInterface {
 
 	private static int MAX_MOVIES = 100;
 
@@ -84,10 +87,14 @@ public class MovieLibrary {
 		Type listType = new TypeToken<Map<String, MovieDescription>>(){}.getType();
 		
 		Map<String, MovieDescription> jsonMap = gson.fromJson(json, listType);
-		
-		for (Map.Entry<String, MovieDescription> entry : jsonMap.entrySet()) {
-    			add(entry.getValue()); // adds ea. MovieDescription obj to array
-			//System.out.println(entry.getValue().toString());
+	
+		try {	
+			for (Map.Entry<String, MovieDescription> entry : jsonMap.entrySet()) {
+				add(entry.getValue()); // adds ea. MovieDescription obj to array
+				//System.out.println(entry.getValue().toString());
+			}
+		} catch(Exception e) {
+			System.out.println("An exception has occurred in MovieLibrary.java.");
 		}
 	}
 
@@ -100,7 +107,7 @@ public class MovieLibrary {
 	* @param clip: MovieDescription information to add to collection
 	* @return boolean: 1 if added successfully, 0 if not.
 	*/
-	public boolean add(MovieDescription clip) {
+	public boolean add(MovieDescription clip) throws JsonRpcException {
 		
 		movies[movieCount] = clip;
 		movieCount++;	
@@ -113,7 +120,7 @@ public class MovieLibrary {
         * @param title: The string of the title to remove
         * @return boolean: 1 if remove was successful, 0 if not / no title found.
         */
-        public boolean remove(String title) {
+        public boolean remove(String title) throws JsonRpcException {
                
                 for(int i = 0; i < movieCount; i++) {
 			MovieDescription m = (MovieDescription) movies[i];
@@ -137,7 +144,7 @@ public class MovieLibrary {
 	* @param title: A String of the MovieDescription to return.
 	* @return MovieDescription
 	*/
-	public MovieDescription get(String title) {
+	public MovieDescription get(String title) throws JsonRpcException {
 
 		for(int i = 0; i < movieCount; i++) {
 			MovieDescription m = (MovieDescription) movies[i];
@@ -151,7 +158,7 @@ public class MovieLibrary {
 	/**
 	* @return String[]: Array of Strings, which are all titles in the library. 
 	*/
-	public String[] getTitles() {
+	public String[] getTitles() throws JsonRpcException {
 		String[] titles = new String[movieCount];
 		
 		for(int i = 0; i < movieCount; i++) {
@@ -166,7 +173,7 @@ public class MovieLibrary {
 	* De-serializes the movies.json file into the MovieLibrary obj
 	* @return boolean: Whether it was successful or not
 	*/
-	public boolean restoreFromFile() {
+	public boolean restoreFromFile() throws JsonRpcException {
 		
 		String json = "", line;
 
@@ -201,7 +208,7 @@ public class MovieLibrary {
 	* Serializes the MovieLibrary obj into JSON and writes to movies.json
 	* @return boolean: Whether it was successful or not.
 	*/
-	public boolean saveToFile(String filename) throws IOException {
+	public boolean saveToFile(String filename) throws IOException, JsonRpcException {
 		MovieDescription tmp = null;
 		Map<String, MovieDescription> jsonMap = new HashMap<>();
 
@@ -218,6 +225,48 @@ public class MovieLibrary {
 
 		return true;
 	}
+
+
+
+	
+	/**
+	*
+	*/
+        public MovieDescription searchTitle(String s) throws JsonRpcException {
+                // http://www.omdbapi.com/?apikey=cdb16783&t=< String to search >
+                URL url;
+                String tmp, content = "";
+
+                try {
+                        url = new URL("http://www.omdbapi.com/?apikey=cdb16783&t=" + s);
+                        URLConnection connection = url.openConnection();
+                        BufferedReader br =
+                                new BufferedReader(new InputStreamReader(
+                                connection.getInputStream())
+                        );
+
+                        while((tmp = br.readLine()) != null)
+                                content += tmp;
+
+                        br.close();
+
+                } catch(Exception e) {
+                        return null;
+                }
+
+                // Check to make sure a vaild movie.
+                JsonObject jsonObj = new Gson().fromJson(content, JsonObject.class);
+
+                // If it's not, return null.
+                if(jsonObj.has("Error")) {
+                        System.out.println("Movie not found!");
+                        return null;
+                }
+
+                System.out.println("Adding movie: " + jsonObj.get("Title") + " to Music Library.");
+                return new MovieDescription(content);
+        }
+
 
 }
 

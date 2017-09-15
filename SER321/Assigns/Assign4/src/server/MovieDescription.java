@@ -1,4 +1,4 @@
-package movie;
+package movie.server;
 
 /**
  * Copyright (c) 2017 Kyler Smith,

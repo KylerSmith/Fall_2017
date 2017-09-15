@@ -1,8 +1,8 @@
-# Fall 2017
+package movie.server;
 
-## SER321
-```C
-/**
+import edu.asu.ser.jsonrpc.common.JsonRpcException;
+import java.io.IOException;
+/** 
  * Copyright (c) 2017 Kyler Smith,
  * Software Engineering,
  * Arizona State University
@@ -22,11 +22,28 @@
  * Or, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,USA
  * <p/>
- * Purpose: <what this file is for>
+ * Purpose: MovieLibraryInterface defines the interface to the server operations
  * <p/>
  * @author Kyler Smith (ksmith91@asu.edu) CIDSE - Software Engineering,
  *                        ASU at the Polytechnic campus
- * @file    <FILE>
- * @date    <MONTH, YEAR>
+ * @file    MovieLibraryInterface.java
+ * @date    <September, 2017>
  **/
-```
+
+public interface MovieLibraryInterface {
+	public boolean saveToFile(String filename) throws JsonRpcException, IOException;
+	public boolean restoreFromFile() throws JsonRpcException;
+	public String[] getTitles() throws JsonRpcException;
+	public MovieDescription get(String movieTitle) throws JsonRpcException;
+	public boolean remove(String movieTitle) throws JsonRpcException;
+	public boolean add(MovieDescription clip) throws JsonRpcException; 
+	public MovieDescription searchTitle(String movieTitle) throws JsonRpcException;
+}
+
+
+
+
+
+
+
+
