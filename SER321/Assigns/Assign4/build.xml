@@ -19,7 +19,7 @@
  * Or, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,USA
  * <p/>
- * Purpose: executing ant on Assign3
+ * Purpose: executing ant on Assign4
  * <p/>
  * @author Kyler Smith (ksmith91@asu.edu) CIDSE - Software Engineering,
  *                        ASU at the Polytechnic campus
@@ -29,7 +29,7 @@
 -->
 
 
-<project name="Assign3"
+<project name="Assign4"
          default="targets" basedir="."
          xmlns="antlib:org.apache.tools.ant">
    <taskdef resource="net/sf/antcontrib/antcontrib.properties"/>
@@ -38,7 +38,7 @@
    <property name="classes.dir" value="./classes" />
    <property name="lib.dir" value="./lib" />
    <property name="Main-Class-SERVER_TESTING" value="movie.server.test"/>
-   <property name="Main-Class-CLIENT_TESTING" value="movie.client.test"/>
+   <property name="Main-Class-CLIENT_TESTING" value="movie.client.Main"/>
    <property name="Client-Main" value="movie.client.Main"/>
    <property name="Server-Main" value="movie.server.Main"/>
    <property environment="env"/>
@@ -47,6 +47,8 @@
       <pathelement location="./${classes.dir}"/>
       <pathelement path="${lib.dir}/gson.jar"/>
       <pathelement path="${lib.dir}/jsonrpcserver.jar"/>
+      <pathelement path="${lib.dir}/jsonrpcclient.jar"/>
+      <pathelement path="${lib.dir}/jsonrpcproxy.jar"/>
    </path>
 
    <target name="targets">

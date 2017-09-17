@@ -9,6 +9,7 @@ import java.io.*;
 import java.util.*;
 import java.net.*;
 import edu.asu.ser.jsonrpc.common.JsonRpcException;
+import edu.asu.ser.jsonrpc.server.HttpServer;
 
 
 /**
@@ -39,7 +40,7 @@ import edu.asu.ser.jsonrpc.common.JsonRpcException;
  * @date    <August, 2017>
  **/
 
-public class MovieLibrary implements MovieLibraryInterface {
+public class MovieLibrary extends Object implements MovieLibraryInterface {
 
 	private static int MAX_MOVIES = 100;
 
@@ -115,29 +116,37 @@ public class MovieLibrary implements MovieLibraryInterface {
 		return true;
 	}
 
+	public boolean add(JsonObject jobj) {
+
+		return true;
+	}
+
 
        /**
         * @param title: The string of the title to remove
         * @return boolean: 1 if remove was successful, 0 if not / no title found.
         */
         public boolean remove(String title) throws JsonRpcException {
-               
-                for(int i = 0; i < movieCount; i++) {
-			MovieDescription m = (MovieDescription) movies[i];
-                        if(title.equals(m.getTitle())) {
-                                for(int j = i; j <= movieCount; j++) {
-                                        if(j+1 == movieCount + 1) {
-						movieCount--;
-                                                return true;
+		try {               
+			for(int i = 0; i < movieCount; i++) {
+				MovieDescription m = (MovieDescription) movies[i];
+				if(title.equals(m.getTitle())) {
+					for(int j = i; j <= movieCount; j++) {
+						if(j+1 == movieCount + 1) {
+							movieCount--;
+							return true;
+						}
+						
+						movies[j] = movies[j+1];
 					}
-                                        
-                                        movies[j] = movies[j+1];
-                                }
-				movieCount--;
-                                return true;
-                        }
-                }
-                return false;
+					movieCount--;
+					return true;
+				}
+			}
+		} catch(Exception e) {
+                	return false;
+		}
+		return false;
         }
 
 	/**
@@ -268,8 +277,29 @@ public class MovieLibrary implements MovieLibraryInterface {
         }
 
 
+/** FOR TESTING PURPOSES **/
+
+	public boolean print(String s) throws JsonRpcException {
+		try {
+			System.out.println("String: " + get(s).toJson());
+			return true;
+		} catch(Exception e) {
+			return false;
+		}
+	}
+
+/**
+        public static void main(String[] args) throws IOException {
+                String port = "8080";
+                if (args.length > 0) {
+                        port = args[0];
+                }
+                HttpServer serv = new HttpServer(
+                        new MovieLibrary(), Integer.parseInt(port));
+                serv.start();
+        }
+**/
+
+
 }
-
-
-
 

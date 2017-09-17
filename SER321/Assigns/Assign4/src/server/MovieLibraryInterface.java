@@ -38,6 +38,7 @@ public interface MovieLibraryInterface {
 	public boolean remove(String movieTitle) throws JsonRpcException;
 	public boolean add(MovieDescription clip) throws JsonRpcException; 
 	public MovieDescription searchTitle(String movieTitle) throws JsonRpcException;
+	public boolean print(String s) throws JsonRpcException;
 }
 
 

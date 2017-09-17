@@ -1,5 +1,22 @@
 package movie.server;
 
+import com.google.gson.Gson;
+import java.util.*;
+import java.lang.*;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+import java.lang.reflect.*;
+import com.google.gson.JsonObject;
+
+import java.io.*;
+import java.net.*;
+
+import edu.asu.ser.jsonrpc.common.JsonRpcException;
+import edu.asu.ser.jsonrpc.server.HttpServer;
+import edu.asu.ser.jsonrpc.*;
+
 /**
  * Copyright (c) 2017 Kyler Smith,
  * Software Engineering,
@@ -28,27 +45,28 @@ package movie.server;
  * @date    September, 2017
  **/
 
-import com.google.gson.Gson;
-import java.util.*;
-import java.lang.*;
-
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
-import java.lang.reflect.*;
-import com.google.gson.JsonObject;
-
-import java.io.*;
-import java.net.*;
-
-import edu.asu.ser.jsonrpc.common.JsonRpcException;
-import edu.asu.ser.jsonrpc.server.HttpServer;
-
 public class test {
 
-	/**
-	* Entry point for the program.
-	*/
+	public static void main(String[] args) throws IOException {
+	      	String port = "8080";
+      		if (args.length > 0) {
+         		port = args[0];
+      		}
+      		HttpServer serv = new HttpServer(
+         		new MovieLibrary("movies.json"), Integer.parseInt(port));
+      		serv.start();
+	}
+}
+
+
+
+
+
+
+
+
+/**  ######### main method from the Main.java class
+
 	public static void main(String[] args) throws IOException {
 
                 try {
@@ -94,17 +112,4 @@ public class test {
                 }
         }
 
-
-
-}
-
-
-
-
-
-
-
-
-
-
-
+**/
