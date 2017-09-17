@@ -54,7 +54,7 @@ import movie.server.MovieDescription;
 public class MovieLibraryProxy extends HttpClient implements MovieLibraryInterface {
 
 	private static String port = "8080";
-	private static String host = "localhost";
+	private static String host = "192.168.0.4";
 	private static int id = 0;
 	private static final boolean debug = true;
 	private static String curlCommand = "curl --data";
