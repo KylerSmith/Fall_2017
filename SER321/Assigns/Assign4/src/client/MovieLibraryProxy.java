@@ -57,7 +57,7 @@ public class MovieLibraryProxy extends HttpClient implements MovieLibraryInterfa
 	
 	private static String host = "localhost"; 	//"192.168.0.4";
 	private static int id = 0;
-	private static final boolean debug = true;
+	private static final boolean debug = false;
 	private static String curlCommand = "curl --data";
 
 	public MovieLibraryProxy(URL url) {
@@ -106,6 +106,12 @@ public class MovieLibraryProxy extends HttpClient implements MovieLibraryInterfa
 		
 		
 		md = new MovieDescription(content);
+		
+		if(md != null)
+			System.out.println(md.toString());
+		else
+			System.out.println("Not found.");
+
 
 		debug(md.toString());	
 		return md;
@@ -117,8 +123,15 @@ public class MovieLibraryProxy extends HttpClient implements MovieLibraryInterfa
 	public boolean remove(String movieTitle) throws JsonRpcException {
 		String value = execute("remove", ("[\"" + movieTitle + "\"]"));
 		debug(value);
-		return (new Gson().fromJson(value, JsonObject.class)).
-			get("result").getAsBoolean();
+
+		Boolean ret = (new Gson().fromJson(value, JsonObject.class)).
+                        get("result").getAsBoolean();
+		if(ret)
+			System.out.println(movieTitle + " was removed successfully.");
+		else
+			System.out.println("Remove unsuccessful.");
+
+		return ret;
 	}
 	public boolean add(MovieDescription clip) throws JsonRpcException {		
 		return false;
@@ -127,8 +140,18 @@ public class MovieLibraryProxy extends HttpClient implements MovieLibraryInterfa
 	public boolean add(String title) throws JsonRpcException {
 
 		String value = execute( "searchTitle", ("[\"" + title + "\"]") );
-		return (new Gson().fromJson(value, JsonObject.class)).
-                        get("result").getAsBoolean();
+
+		JsonObject jobj = (new Gson().fromJson(value, JsonObject.class));
+		
+
+			
+		if(jobj.has("result")) {
+			System.out.println(title + " was added successfully.");
+			return true;
+		} else 
+			System.out.println("Add unsuccessful.");
+		
+		return false;
 	}
 
 	public MovieDescription searchTitle(String movieTitle) throws JsonRpcException {
@@ -165,7 +188,6 @@ public class MovieLibraryProxy extends HttpClient implements MovieLibraryInterfa
 		
 		ret = addCmdMethod(cmd);
 		//debug(addCmdParams(param, ret) + " " + host + ":" + port);
-
 		return (addCmdParams(param, ret) + " " + host + ":" + port);
 	}
 
