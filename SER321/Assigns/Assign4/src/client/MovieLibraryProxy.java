@@ -54,7 +54,8 @@ import movie.server.MovieDescription;
 public class MovieLibraryProxy extends HttpClient implements MovieLibraryInterface {
 
 	private static String port = "8080";
-	private static String host = "192.168.0.4";
+	
+	private static String host = "localhost"; 	//"192.168.0.4";
 	private static int id = 0;
 	private static final boolean debug = true;
 	private static String curlCommand = "curl --data";
@@ -119,11 +120,17 @@ public class MovieLibraryProxy extends HttpClient implements MovieLibraryInterfa
 		return (new Gson().fromJson(value, JsonObject.class)).
 			get("result").getAsBoolean();
 	}
-	public boolean add(MovieDescription clip) throws JsonRpcException {
-		
-		
+	public boolean add(MovieDescription clip) throws JsonRpcException {		
 		return false;
-	} 
+	}
+
+	public boolean add(String title) throws JsonRpcException {
+
+		String value = execute( "searchTitle", ("[\"" + title + "\"]") );
+		return (new Gson().fromJson(value, JsonObject.class)).
+                        get("result").getAsBoolean();
+	}
+
 	public MovieDescription searchTitle(String movieTitle) throws JsonRpcException {
 		return null;
 	}
@@ -157,7 +164,8 @@ public class MovieLibraryProxy extends HttpClient implements MovieLibraryInterfa
 		String ret = curlCommand;
 		
 		ret = addCmdMethod(cmd);
-		debug(addCmdParams(param, ret) + " " + host + ":" + port);
+		//debug(addCmdParams(param, ret) + " " + host + ":" + port);
+
 		return (addCmdParams(param, ret) + " " + host + ":" + port);
 	}
 

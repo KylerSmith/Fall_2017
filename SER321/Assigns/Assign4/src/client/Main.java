@@ -40,6 +40,8 @@ public class Main {
 					ml.get(input.substring(4));
 				else if(input.substring(0, 6).equals("remove"))
 					ml.remove(input.substring(7));
+				else if(input.substring(0,3).equals("add"))
+					ml.add(input.substring(4));
 				else {
 					System.out.println("Choices are:" +
 						"'getTitles', 'remove <title>'," + 

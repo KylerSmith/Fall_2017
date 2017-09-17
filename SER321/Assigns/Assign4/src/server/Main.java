@@ -37,7 +37,7 @@ import edu.asu.ser.jsonrpc.*;
  * Or, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,USA
  * <p/>
- * Purpose: Testing the MovieLibrary and MovieDescription classes.
+ * Purpose: Driver for the server utilizing the MovieLibrary and MovieDescription classes.
  * <p/>
  * @author Kyler Smith (ksmith91@asu.edu) CIDSE - Software Engineering,
  *                        ASU at the Polytechnic campus

@@ -116,7 +116,9 @@ public class MovieLibrary extends Object implements MovieLibraryInterface {
 		return true;
 	}
 
-	public boolean add(JsonObject jobj) {
+	public boolean add(String jObjContent) {
+		System.out.println("Content string passed.");
+		MovieDescription md  = new MovieDescription(jObjContent);
 
 		return true;
 	}
@@ -272,8 +274,19 @@ public class MovieLibrary extends Object implements MovieLibraryInterface {
                         return null;
                 }
 
-                System.out.println("Adding movie: " + jsonObj.get("Title") + " to Music Library.");
-                return new MovieDescription(content);
+                System.out.println("Adding movie: " + jsonObj.get("Title") + 
+				   " to Movie Library.");
+       		
+		MovieDescription md = new MovieDescription(content);
+		
+		this.add(md);
+		try {
+			saveToFile("movies.json");
+		} catch(Exception e) {
+			return null;
+		}
+	        return md;
+
         }
 
 
