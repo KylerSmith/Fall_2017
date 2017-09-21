@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<history>
+   <processor signature="g++ noversion nomachine -c -I../../../../../../../../usr/local/include">
+      <target file="CalculateServer.o" lastModified="15ea53b0088">
+         <source file="../../src/server/CalculateServer.cpp" lastModified="15ea53ac5f0"/>
+      </target>
+   </processor>
+</history>

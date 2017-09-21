@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<history>
+   <processor signature="gcc -L../../../../../../../../../usr/local/lib -ljsoncpp -ljsonrpccpp-server -ljsonrpccpp-common -lmicrohttpd -lstdc++">
+      <target file="calculateRPCServer" lastModified="15ea53b0088">
+         <source file="../../../../../../../../../usr/local/lib/libjsonrpccpp-server.so.1.0.0" lastModified="15e9b469600"/>
+         <source file="../../../../../../../../../usr/local/lib/libjsonrpccpp-common.so.1.0.0" lastModified="15e9b465780"/>
+         <source file="../obj/server/CalculateServer.o" lastModified="15ea53b0088"/>
+      </target>
+   </processor>
+   <processor signature="gcc -L../../../../../../../../../usr/local/lib -ljsoncpp -ljsonrpccpp-client -ljsonrpccpp-common -lmicrohttpd -lstdc++">
+      <target file="calculateRPCClient" lastModified="15ea53b6618">
+         <source file="../../../../../../../../../usr/local/lib/libjsonrpccpp-client.so.1.0.0" lastModified="15e9b4672d8"/>
+         <source file="../../../../../../../../../usr/local/lib/libjsonrpccpp-common.so.1.0.0" lastModified="15e9b465780"/>
+         <source file="../obj/client/CalculatorClient.o" lastModified="15ea53b6230"/>
+      </target>
+   </processor>
+</history>

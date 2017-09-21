@@ -41,7 +41,7 @@ import edu.asu.ser.jsonrpc.*;
  * <p/>
  * @author Kyler Smith (ksmith91@asu.edu) CIDSE - Software Engineering,
  *                        ASU at the Polytechnic campus
- * @file    test.java
+ * @file    Main.java
  * @date    September, 2017
  **/
 
