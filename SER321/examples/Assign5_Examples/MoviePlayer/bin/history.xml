@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<history>
+   <processor signature="gcc -L../../../../../../../../../usr/local/lib -lfltk -lpthread -lstdc++">
+      <target file="sampleMovieClient" lastModified="15ea5e1c3f0">
+         <source file="../obj/MovieClientGui.o" lastModified="15ea5e1c3f0"/>
+         <source file="../obj/MovieClient.o" lastModified="15ea5e1c3f0"/>
+      </target>
+   </processor>
+</history>

@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<history>
+   <processor signature="gcc noversion nomachine -std=c++14 -c -I../../../../../../../../usr/include/jsoncpp">
+      <target file="MovieClient.o" lastModified="15ea5e1c3f0">
+         <source file="../src/cpp/MovieClient.cpp" lastModified="15e9a8c0060"/>
+      </target>
+      <target file="MovieClientGui.o" lastModified="15ea5e1c3f0">
+         <source file="../src/cpp/MovieClientGui.cpp" lastModified="15e9a8c0060"/>
+      </target>
+   </processor>
+</history>

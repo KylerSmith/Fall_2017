@@ -29,7 +29,7 @@
 -->
 
 
-<project name="Assign4"
+<project name="Assign5"
          default="targets" basedir="."
          xmlns="antlib:org.apache.tools.ant">
    <taskdef resource="net/sf/antcontrib/antcontrib.properties"/>
@@ -41,6 +41,8 @@
    <property name="Main-Class-CLIENT_TESTING" value="movie.client.Main"/>
    <property name="Client-Main" value="movie.client.Main"/>
    <property name="Server-Main" value="movie.server.Main"/>
+   <property name="dist.dir" value="bin"/>
+   <property name="obj.dir" value="obj"/>
    <property environment="env"/>
 
    <path id="compile.classpath">
@@ -113,7 +115,7 @@
             <property name="includepath" value="/opt/local/include:/usr/local/include"/>
             <property name="includepath" value="/opt/local/include:/usr/local/include"/>
             <property name="client.lib.path" value="/opt/local/lib"/>
-            <property name="client.lib.list" value="c++,jsoncpp,stdc++"/>
+            <property name="client.lib.list" value="microhttpd,jsonrpccpp-client,jsoncpp,jsonrpccpp-common,c++,stdc++"/>
          </then>
       <elseif>
          <isset property="build.host.islinux"/>
@@ -121,7 +123,7 @@
             <echo message="detected a linux host"/>
             <property name="includepath" value="/usr/include/jsoncpp"/>
             <property name="client.lib.path" value="/usr/local/lib"/>
-            <property name="client.lib.list" value="jsoncpp,stdc++"/>
+            <property name="client.lib.list" value="jsoncpp,jsonrpccpp-client,jsonrpccpp-common,microhttpd,stdc++"/>
          </then>
       </elseif>
       <else>
@@ -175,11 +177,117 @@
                 </java>
         </target>
 
+ <target name="prepare.all">
+      <mkdir dir="${classes.dir}"/>
+      <mkdir dir="${dist.dir}" />
+      <mkdir dir="${obj.dir}" />
+      <if>
+         <isset property="env.USERNAME"/>
+         <then>
+            <echo message="detected username is: ${env.USERNAME}"/>
+         </then>
+      <elseif>
+         <isset property="env.USER"/>
+         <then>
+            <echo message="detected user is: ${env.USER}"/>
+         </then>
+      </elseif>
+      </if>
+      <echo message="host name is: ${os.name}"/>
+      <echo message="host arch is: ${os.arch}"/>
+      <echo message="host version is: ${os.version}"/>
+      <echo message="base directory is: ${basedir}"/>
+
+      <!-- Platform identification -->
+      <condition property="build.host.islinux">
+        <and>
+          <os family="unix" />
+          <not>
+            <contains string="${os.name}" substring="mac"
+                      casesensitive="false" />
+          </not>
+        </and>
+      </condition>
+      <condition property="build.host.platform" value="linux">
+        <isset property="build.host.islinux" />
+      </condition>
+
+      <condition property="build.host.ismac">
+        <and>
+          <os family="unix" />
+          <contains string="${os.name}" substring="mac" casesensitive="false"/>
+        </and>
+      </condition>
+      <condition property="build.host.platform" value="mac">
+        <isset property="build.host.ismac" />
+      </condition>
+
+      <fail unless="build.host.platform"
+            message="Building on ${os.name} is not supported" />
+      <echo message="build.host.platform is: ${build.host.platform}"/>
+      <if>
+         <isset property="build.host.ismac"/>
+         <then>
+            <echo message="detected a mac host"/>
+            <property name="cxxflag" value="-std=c++14"/>
+            <property name="includepath" value="/opt/local/include:/usr/local/include"/>
+            <property name="client.lib.path" value="/opt/local/lib"/>
+            <property name="client.lib.list" value="c++,fltk,stdc++,jsonrpccpp"/>
+         </then>
+      <elseif>
+         <isset property="build.host.islinux"/>
+         <then>
+            <echo message="detected a linux host"/>
+            <property name="cxxflag" value="-std=c++14"/>
+            <property name="includepath" value="/usr/include/jsoncpp"/>
+            <property name="client.lib.path" value="/usr/local/lib"/>
+            <property name="client.lib.list" value="jsonrpccpp-client,jsonrpccpp-common,microhttpd,jsoncpp,fltk,pthread,stdc++"/>
+         </then>
+      </elseif>
+      <else>
+         <echo message="failed to detect a host I know how to build on"/>
+      </else>
+   </if>
+   </target>
+
+
+   <target name="build.cpp" depends="prepare.all">
+      <taskdef resource="cpptasks.tasks"/>
+      <cc outtype="executable" subsystem="console"
+          outfile="${dist.dir}/movieClient"
+          objdir="${obj.dir}">
+         <compilerarg value="${cxxflag}"/>
+         <includepath>
+            <pathelement path="${includepath}"/>
+         </includepath>
+         <libset dir="${client.lib.path}" libs="${client.lib.list}"/>
+         <fileset dir="${src.dir}/cpp" includes="MovieClientGui.cpp, MovieClient.cpp"/>
+      </cc>
+   </target>
+
+
+   <target name="build.client" depends="prepare.all">
+     <taskdef resource="cpptasks.tasks"/> 
+     <cc outtype="executable" subsystem="console"
+          outfile="${dist.dir}/movieClient"
+          objdir="${obj.dir}">
+         <compilerarg value="${cxxflag}"/>
+         <includepath>
+            <pathelement path="${includepath}"/>
+         </includepath>
+         <libset dir="${client.lib.path}" libs="${client.lib.list}"/>
+         <fileset dir="${src.dir}/cpp" includes="MovieClient.cpp, MovieClient.cpp"/>
+      </cc>
+   </target>
+
+
 
 <!-- ###################### End modifications ############### -->
 
    <target name="clean">
-     <delete dir="${classes.dir}" />
+     <delete dir="${classes.dir}"/>
+     <delete dir="${obj.dir}"/>
+     <delete dir="${dist.dir}"/>
    </target>
 
 </project>
