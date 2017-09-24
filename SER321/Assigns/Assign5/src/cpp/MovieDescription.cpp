@@ -1,4 +1,4 @@
-nclude <stdio.h>
+#include <stdio.h>
 #include <iostream>
 #include <thread>
 #include <stdlib.h>
@@ -56,7 +56,6 @@ public:
 	array::string Actors;
 	array::string Genre;
 
-private:
 }
 
 public int main(int argc, char * argv[]) {

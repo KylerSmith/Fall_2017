@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<history>
+   <processor signature="gcc -L../../../../../../../../usr/local/lib -ljsonrpccpp-client -ljsonrpccpp-common -lmicrohttpd -ljsoncpp -lfltk -lpthread -lstdc++">
+      <target file="movieClient" lastModified="15eb1ec5c78">
+         <source file="../../../../../../../../usr/local/lib/libjsonrpccpp-client.so.1.0.0" lastModified="15e9b4672d8"/>
+         <source file="../../../../../../../../usr/local/lib/libjsonrpccpp-common.so.1.0.0" lastModified="15e9b465780"/>
+         <source file="../obj/MovieClient.o" lastModified="15eb1ec5c78"/>
+      </target>
+   </processor>
+</history>

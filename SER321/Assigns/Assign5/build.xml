@@ -288,6 +288,7 @@
      <delete dir="${classes.dir}"/>
      <delete dir="${obj.dir}"/>
      <delete dir="${dist.dir}"/>
+     <delete dir="libjson-rpc-cpp"/>
    </target>
 
 </project>

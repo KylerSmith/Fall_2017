@@ -1,0 +1,38 @@
+[
+    {
+        "method": "saveToFile",
+        "params": [],
+        "returns": true
+    },
+    {
+        "method": "restoreFromFile",
+        "params": [],
+        "returns": true
+    },
+    {
+        "method": "getTitles",
+        "params": [],
+        "returns": []
+    },
+    {
+        "method": "get",
+        "params": ["HomeBrew"],
+        "returns": {}
+    },
+    {
+        "method": "remove",
+        "params": ["HomeBrew"],
+        "returns": true
+    },
+    {
+        "method": "add",
+        "params": [{}],
+        "returns": true
+    },
+    {
+        "method": "searchTitle",
+        "params": ["HomeBrew"],
+        "returns": [{}]
+ ]
+
+

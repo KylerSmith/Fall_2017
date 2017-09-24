@@ -266,16 +266,18 @@ public:
 
 // main method for this program.
 int main(int argc, char * argv[]) {
-
-   //string host = "http://127.0.0.1:8080";
-
-   string nameStr = (argc>1)?argv[1]:"Movie Library";
-   string host = (argc>2)?argv[2]:"127.0.0.1";
-   string port = (argc>3)?argv[3]:"8888";
-   MovieClient mc(nameStr,host,port);
-   jsonrpc::HttpClient httpclient(host);
-   
-   return (Fl::run());
+	
+	//string host = "http://127.0.0.1:8080";
+	
+	string nameStr = (argc>1)?argv[1]:"Movie Library";
+	string host = (argc>2)?argv[2]:"127.0.0.1";
+	string port = (argc>3)?argv[3]:"8888";
+	MovieClient mc(nameStr,host,port);
+	jsonrpc::HttpClient httpclient(host);
+	
+	
+	
+	return (Fl::run());
 }
 
 
