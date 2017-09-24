@@ -21,7 +21,7 @@
     },
     {
         "method": "remove",
-        "params": ["HomeBrew"],
+        "params": [],
         "returns": true
     },
     {
@@ -31,8 +31,9 @@
     },
     {
         "method": "searchTitle",
-        "params": ["HomeBrew"],
+        "params": [],
         "returns": [{}]
+    }
  ]
 
 
