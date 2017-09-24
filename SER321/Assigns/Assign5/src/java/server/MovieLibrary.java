@@ -4,6 +4,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
+import com.google.gson.JsonArray;
 import java.lang.reflect.*;
 import java.io.*;
 import java.util.*;
@@ -58,10 +59,6 @@ public class MovieLibrary extends Object implements MovieLibraryInterface {
 	*/
 	public MovieLibrary(){}
 
-
-	/**
-	* TODO: Implement the following constructor
-	*/
 	public MovieLibrary(String jsonFilename) {
 		
 		String json = "", line;
@@ -153,14 +150,18 @@ public class MovieLibrary extends Object implements MovieLibraryInterface {
 
 	/**
 	* @param title: A String of the MovieDescription to return.
-	* @return MovieDescription
+	* @return MovieDescription **changed to JsonObject**
 	*/
 	public MovieDescription get(String title) throws JsonRpcException {
 
 		for(int i = 0; i < movieCount; i++) {
 			MovieDescription m = (MovieDescription) movies[i];
 			if(title.equals(m.getTitle())) {
-				return (MovieDescription) movies[i];
+
+				// return (MovieDescription) movies[i]
+				MovieDescription md = (MovieDescription)movies[i];
+				System.out.println("About to return the MD obj ========================");
+				return md;
 			}
 		}
 		return null;
@@ -294,7 +295,7 @@ public class MovieLibrary extends Object implements MovieLibraryInterface {
 
 	public boolean print(String s) throws JsonRpcException {
 		try {
-			System.out.println("String: " + get(s).toJson());
+			//System.out.println("String: " + get(s).toJson());
 			return true;
 		} catch(Exception e) {
 			return false;

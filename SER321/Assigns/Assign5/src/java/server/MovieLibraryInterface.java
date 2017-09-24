@@ -31,11 +31,15 @@ import java.io.IOException;
  * @date    <September, 2017>
  **/
 
+// ** public MovieDescription get(String movieTitle) throws JsonRpcException; **
+
 public interface MovieLibraryInterface {
 	public boolean saveToFile(String filename) throws JsonRpcException, IOException;
 	public boolean restoreFromFile() throws JsonRpcException;
 	public String[] getTitles() throws JsonRpcException;
+	
 	public MovieDescription get(String movieTitle) throws JsonRpcException;
+	
 	public boolean remove(String movieTitle) throws JsonRpcException;
 	public boolean add(MovieDescription clip) throws JsonRpcException; 
 	public boolean add(String jObjContent) throws JsonRpcException;

@@ -170,15 +170,15 @@ public:
  
       // create the media type drop-down (input_choice)
       actorsChoice = new Fl_Choice(295, 315, 150, 25, "Actors");
-      actorsChoice->add("Will Smith");
-      actorsChoice->add("Anne Hathaway");
-      actorsChoice->value(0); // set the control initially to Will Smith
+      //actorsChoice->add("Will Smith");
+      //actorsChoice->add("Anne Hathaway");
+      //actorsChoice->value(0); // set the control initially to Will Smith
 
       // create the media type drop-down (input_choice)
       genreChoice = new Fl_Choice(502, 315, 120, 25, "Genre");
-      genreChoice->add("Action");
-      genreChoice->add("Animation");
-      genreChoice->value(0); // set the control initially to Action
+      //genreChoice->add("Action");
+      //genreChoice->add("Animation");
+      //genreChoice->value(0); // set the control initially to Action
 
       end();
       show();

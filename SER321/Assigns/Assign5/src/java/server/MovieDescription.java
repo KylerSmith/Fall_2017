@@ -189,8 +189,32 @@ public class MovieDescription {
 	/**
 	* @return Gson: Gson representation of MovieDescription obj
 	*/
-	public String toJson() {
-		return new GsonBuilder().create().toJson(this);
+	public JsonObject toJson() {
+			
+		JsonObject retObj = new JsonObject();
+
+		retObj.addProperty("Title", Title);
+		retObj.addProperty("Rated", Rated);
+		retObj.addProperty("Released", Released);
+		retObj.addProperty("Runtime", Runtime);
+		retObj.addProperty("Plot", Plot);
+		retObj.addProperty("Filename", Filename);
+		
+		JsonArray jArr = new JsonArray();
+		for(String s : getActors())
+			jArr.add(s);
+		
+		retObj.add("Actors", jArr);
+
+		JsonArray gArr = new JsonArray();
+		for(String s : getGenre())
+			gArr.add(s);
+
+		retObj.add("Genre", gArr);
+		System.out.println("About to return Json rep of MD =================");
+		return retObj;
+
+		
 	}
 
 

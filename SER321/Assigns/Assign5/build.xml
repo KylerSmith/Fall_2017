@@ -134,7 +134,7 @@
 
    <target name="build.java" depends="prepare"
            description="Compile Java sources">
-      <javac srcdir="${src.dir}"
+      <javac srcdir="${src.dir}/java/server"
              includeantruntime="false"
              destdir="${classes.dir}">
          <classpath refid="compile.classpath"/>

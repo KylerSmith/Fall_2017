@@ -1,4 +1,5 @@
 #include "MovieClientGui.cpp"
+#include "moviemethods.h"
 #include <jsonrpccpp/client/connectors/httpclient.h>
 #include <json/json.h>
 
@@ -20,6 +21,7 @@
 #include <array>
 
 using namespace std;
+using namespace jsonrpc;
 
 /**
  * Copyright (c) 2017 Tim Lindquist,
@@ -54,6 +56,9 @@ using namespace std;
  * @file    MovieClient.cpp
  * @date    January, 2017
  **/
+
+HttpClient httpclient("http://localhost:8080");
+MovieMethods mm(httpclient);
 
 // string variable and run method for use with threading. A separate thread
 // is created to run the vlc application, which plays the video file.
@@ -91,7 +96,7 @@ public:
    MovieClient(string name, string aHost, string aPort) : MovieClientGui(name.c_str()) {
       callback(ClickedX, (void*)this);
       playThread = NULL;
-      menubar->callback(Menu_ClickedS, (void*)this);
+      menubar->callback(Menu_ClickedS, (void*)this);	
       appAuthor = name;
       host = aHost;
       port = aPort;
@@ -131,7 +136,7 @@ public:
       Fl_Tree_Item *item = (Fl_Tree_Item*)tree->item_clicked();
       cout << "Tree callback. Current selection is: ";
       if ( item ) {
-         cout << item->label();
+	cout<< item->label();
       } else {
          cout << "none";
       }
@@ -139,18 +144,44 @@ public:
       string aStr("unknown");
       string aTitle(item->label());
       switch ( tree->callback_reason() ) {  // reason callback was invoked
-        case       FL_TREE_REASON_NONE: {aStr = "none"; break;}
-        case     FL_TREE_REASON_OPENED: {aStr = "opened";break;}
-        case     FL_TREE_REASON_CLOSED: {aStr = "closed"; break;}
-        case   FL_TREE_REASON_SELECTED: {
-           aStr = "selection";
-           titleInput->value(aTitle.c_str());
-           break;
+        case FL_TREE_REASON_NONE: {aStr = "none"; break;}
+        case FL_TREE_REASON_OPENED: {aStr = "opened";break;}
+        case FL_TREE_REASON_CLOSED: {aStr = "closed"; break;}
+        case FL_TREE_REASON_SELECTED: {
+        	aStr = "selection";
+           	titleInput->value(aTitle.c_str());
+           	break;
         }
         case FL_TREE_REASON_DESELECTED: {aStr = "deselected"; break;}
-      default: {break;}
-      }
-   std::cout << "Callback reason: " << aStr.c_str() << endl;
+      	default: {break;}
+      	}
+   	std::cout << "Callback reason: " << aStr.c_str() << endl;	
+
+	string check = string("selection");
+
+	if(aStr.compare(check) == 0) {
+		Json::Reader r;
+		Json::Value val = mm.get(aTitle);
+		if(!r.parse(val.asString(), val))
+			cout << "\nParsing error.\n";
+		ratedInput->value(val["Rated"].asString().c_str());
+		runtimeInput->value(val["Runtime"].asString().c_str());
+		releasedInput->value(val["Released"].asString().c_str());
+		plotMLIn->value(val["Plot"].asString().c_str());
+		filenameInput->value(val["Filename"].asString().c_str());
+
+		actorsChoice->clear();
+		genreChoice->clear();
+
+		Json::Value actors = val["Actors"], genre = val["Genre"];
+		for(int i = 0; i < actors.size(); i++) 
+			actorsChoice->add(actors[i].asString().c_str());
+		for(int i = 0; i < genre.size(); i++)
+			genreChoice->add(genre[i].asString().c_str());
+
+		actorsChoice->value(0);
+		genreChoice->value(0);
+	}
    }
 
    // Static menu callback method
@@ -179,48 +210,13 @@ public:
          exit(0);
       }else if(selectPath.compare("Movie/Remove")==0){
          cout << "Menu item Movie/Remove selected." << endl;
-         cout << "Removing video with title: " << titleInput->value()
-              << " " << endl;
-         bool addResult = true;
-         cout << "Remove " << ((addResult)?"successful":"unsuccessful") << endl;
-      }else if(selectPath.compare("Movie/Play")==0){
-         // uname returns OS Name. This program defined to work with
-         // Linux and Darwin (Darwin is Mac OSX)
-         string unameres = exec("uname");
-         // pwd is print working directory. Used to build an absolute path to the
-         // video file to be played.
-         //std::string pwdPath = exec("pwd");
-         //pwdPath = pwdPath.substr(0,pwdPath.length()-1);
-         //std::cout << "OS type is: " << unameres << " curr.dir is: "
-         //          << pwdPath << std::endl;
-         // This path is only valid on linux so we will have to check ostype
-         string pwdPath = "http://";
-         stringstream streamLinux;
-         streamLinux << "/usr/bin/vlc "
-                     << pwdPath << host << ":" << port << "/"
-                     << "MachuPicchuTimelapseVimeo.mp4";
-         string aStr("Linux");
-         stringstream streamMac;
-         streamMac << "/Applications/VLC.app/Contents/MacOS/VLC "
-                   << pwdPath << host << ":" << port << "/"
-                     << "MachuPicchuTimelapseVimeo.mp4";
-         cout << "mac command: " << streamMac.str() << endl;
-         cout << "linux command: " << streamLinux.str() << endl;
-         // start vlc to play the video file.
-         // limit the comparison to the length of Linux to remove new line char.
-         // Create a new thread to play the movie using vlc on the appropriate system.
-         // An attempt to exit the GUI/Application will block to join
-         // (syncronize) with the thread/vlc
-         if(unameres.compare(0,aStr.length(),aStr)==0){
-            string argLinux(streamLinux.str());
-            cmd = argLinux;
-            playThread = new thread(run);
-         }else{
-            string arg(streamMac.str());
-            cmd = arg;
-            playThread = new thread(run);
-         }
-      }
+         cout << "Removing video with title: " << titleInput->value() << endl;
+	mm.remove(string(titleInput->value()));
+
+      	}else if(selectPath.compare("File/Tree Refresh")==0){
+		cout << "Menu item File/Refresh Tree selected." << endl;
+		buildTree();
+	}
    }
 
    // local method to execute a system command (uname or pwd). Note, the
@@ -240,20 +236,25 @@ public:
 
    // local method to build the tree in the GUI left panel.
    void buildTree(){
-      std::array<std::string,6> videoList =
-         {"The Force Awakens","2012","Race","The Internship","Annie","My Old Lady"};
-      std::array<std::string,6> videoGenre =
-         {"Action","Action","Biography","Comedy","Comedy","Comedy"};
+
+	Json::Value titles = mm.getTitles();
+	Json::Reader reader;
+	int size = titles.size(), i;
+
+	std::vector<std::string> titleList;
+
+	for(i = 0; i < size; ++i) {
+		cout << "Adding: " << titles[i].asString() << endl;
+		titleList.push_back(titles[i].asString());
+	}
+	
       tree->clear();
-      cout << endl << "Adding tree nodes for video titles: ";
-      for(int i=0; i<videoList.size(); i++){
-         cout << " " << videoList[i] << ", ";
-         string title = videoList[i];
-         string genre = videoGenre[i];
+      cout << endl << "Adding tree nodes for movie titles: ";
+      for(int i = 0; i < size; i++) {
+         cout << " " << titleList[i] << ", ";
+         string title = titleList[i];
          std::stringstream stream;
-         stream << "Video"
-                << "/"
-                << genre
+         stream << "Movie"
                 << "/" << title;
          tree->add(stream.str().c_str());
       }
@@ -271,17 +272,10 @@ int main(int argc, char * argv[]) {
 	
 	string nameStr = (argc>1)?argv[1]:"Movie Library";
 	string host = (argc>2)?argv[2]:"127.0.0.1";
-	string port = (argc>3)?argv[3]:"8888";
+	string port = (argc>3)?argv[3]:"8080";
 	MovieClient mc(nameStr,host,port);
-	jsonrpc::HttpClient httpclient(host);
-	
-	
-	
 	return (Fl::run());
 }
-
-
-
 
 
 

@@ -16,12 +16,13 @@
     },
     {
         "method": "get",
-        "params": ["HomeBrew"],
-        "returns": {}
+        "params": ["aTitle"],
+        "returns": "{\"Title\":\"Minions Banana\",\"Rated\":\"PG\",\"Released\":\"12 Dec 2015\",\"Runtime\":\"5 min\",\"Plot\":\"Minions fight over a banana. In the process, they wreak havoc in the Bomb Factory.\",\"Filename\":\"MinionsBanana.mp4\",\"Actors\":[\"Steve\",\"Kevin\",\"Stuart\"],\"Genre\":[\"Animation\",\"Family\",\"Cartoon\"]}"
+ 
     },
     {
         "method": "remove",
-        "params": [],
+        "params": ["aTitle"],
         "returns": true
     },
     {
@@ -31,8 +32,8 @@
     },
     {
         "method": "searchTitle",
-        "params": [],
-        "returns": [{}]
+        "params": ["aTitle"],
+        "returns": { }
     }
  ]
 
