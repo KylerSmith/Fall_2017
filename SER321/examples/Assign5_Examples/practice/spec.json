@@ -1,0 +1,10 @@
+[
+	{
+		"name": "sayHello",
+		"params": {"name": "Peter"},
+		"returns": "Hello, Pete."
+	},
+	{
+		"name": "notifyServer"
+	}
+]
