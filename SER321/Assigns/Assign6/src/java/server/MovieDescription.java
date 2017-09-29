@@ -1,4 +1,4 @@
-package movie.server;
+package assign6.movie.server;
 
 /**
  * Copyright (c) 2017 Kyler Smith,
@@ -211,7 +211,6 @@ public class MovieDescription {
 			gArr.add(s);
 
 		retObj.add("Genre", gArr);
-		System.out.println("About to return Json rep of MD =================");
 		return retObj;
 
 		

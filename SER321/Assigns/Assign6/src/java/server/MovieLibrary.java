@@ -1,4 +1,4 @@
-package movie.server;
+package assign6.movie.server;
 
 import com.google.gson.GsonBuilder;
 import com.google.gson.Gson;

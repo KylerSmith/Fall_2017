@@ -1,0 +1,309 @@
+<!--
+/**
+ * Copyright (c) 2017 Kyler Smith,
+ * Software Engineering,
+ * Arizona State University
+ * <p/>
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation version 2
+ * of the License.
+ * <p/>
+ * This program is distributed in the hope that it will be useful,
+ * but without any warranty or fitness for a particular purpose.
+ * <p/>
+ * Please review the GNU General Public License at:
+ * http://www.gnu.org/licenses/gpl-2.0.html
+ * see also: https://www.gnu.org/licenses/gpl-faq.html
+ * so you are aware of the terms and your rights with regard to this software.
+ * Or, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,USA
+ * <p/>
+ * Purpose: executing ant on Assign4
+ * <p/>
+ * @author Kyler Smith (ksmith91@asu.edu) CIDSE - Software Engineering,
+ *                        ASU at the Polytechnic campus
+ * @file    build.xml
+ * @date    <September, 2017>
+ **/
+-->
+
+
+<project name="Assign6"
+         default="targets" basedir="."
+         xmlns="antlib:org.apache.tools.ant">
+   <taskdef resource="net/sf/antcontrib/antcontrib.properties"/>
+
+   <property name="src.dir" value="./src" />
+   <property name="classes.dir" value="./classes" />
+   <property name="lib.dir" value="./lib" />
+   <property name="Main-Class-SERVER_TESTING" value="movie.server.test"/>
+   <property name="Main-Class-CLIENT_TESTING" value="assign6.movie.client.MovieLibraryClient"/>
+   <property name="Client-Main" value="assign6.movie.client.MovieLibraryClient"/>
+   <property name="Server-Main" value="assign6.movie.server.MovieLibraryServer"/>
+   <property name="dist.dir" value="bin"/>
+   <property name="obj.dir" value="obj"/>
+   <property environment="env"/>
+
+   <path id="compile.classpath">
+      <pathelement location="./${classes.dir}"/>
+      <pathelement path="${lib.dir}/gson.jar"/>
+      <pathelement path="${lib.dir}/jsonrpcserver.jar"/>
+      <pathelement path="${lib.dir}/jsonrpcclient.jar"/>
+      <pathelement path="${lib.dir}/jsonrpcproxy.jar"/>
+   </path>
+
+   <target name="targets">
+     <echo message="targets are clean, prepare, build.java, execute.java"/>
+   </target>
+
+   <target name="prepare">
+      <!-- Create the time stamp -->
+      <tstamp/>
+      <!-- Create the build directory structure used by compile -->
+      <echo message="home defined as: ${env.HOME}" />
+      <mkdir dir="${classes.dir}" />
+      <if>
+         <isset property="env.USERNAME"/>
+         <then>
+            <echo message="detected username is: ${env.USERNAME}"/>
+         </then>
+      <elseif>
+         <isset property="env.USER"/>
+         <then>
+            <echo message="detected user is: ${env.USER}"/>
+         </then>
+      </elseif>
+      </if>
+      <echo message="host name is: ${os.name}"/>
+      <echo message="host arch is: ${os.arch}"/>
+      <echo message="host version is: ${os.version}"/>
+      <echo message="base directory is: ${basedir}"/>
+
+      <!-- Platform identification -->
+      <condition property="build.host.islinux">
+        <and>
+          <os family="unix" />
+          <not>
+            <contains string="${os.name}" substring="mac"
+                      casesensitive="false" />
+          </not>
+        </and>
+      </condition>
+      <condition property="build.host.platform" value="linux">
+        <isset property="build.host.islinux" />
+      </condition>
+
+      <condition property="build.host.ismac">
+        <and>
+          <os family="unix" />
+          <contains string="${os.name}" substring="mac" casesensitive="false"/>
+        </and>
+      </condition>
+      <condition property="build.host.platform" value="mac">
+        <isset property="build.host.ismac" />
+      </condition>
+
+      <fail unless="build.host.platform"
+            message="Building on ${os.name} is not supported" />
+      <echo message="build.host.platform is: ${build.host.platform}"/>
+      <if>
+         <isset property="build.host.ismac"/>
+         <then>
+            <echo message="detected a mac host"/>
+            <property name="includepath" value="/opt/local/include:/usr/local/include"/>
+            <property name="includepath" value="/opt/local/include:/usr/local/include"/>
+            <property name="includepath" value="/opt/local/include:/usr/local/include"/>
+            <property name="client.lib.path" value="/opt/local/lib"/>
+            <property name="client.lib.list" value="microhttpd,jsonrpccpp-client,jsoncpp,jsonrpccpp-common,c++,stdc++"/>
+         </then>
+      <elseif>
+         <isset property="build.host.islinux"/>
+         <then>
+            <echo message="detected a linux host"/>
+            <property name="includepath" value="/usr/include/jsoncpp"/>
+            <property name="client.lib.path" value="/usr/local/lib"/>
+            <property name="client.lib.list" value="jsoncpp,jsonrpccpp-client,jsonrpccpp-common,microhttpd,stdc++"/>
+         </then>
+      </elseif>
+      <else>
+         <echo message="failed to detect a host I know how to build on"/>
+      </else>
+   </if>
+   </target>
+
+   <target name="build.java" depends="prepare"
+           description="Compile Java sources">
+      <javac srcdir="${src.dir}/java/server"
+             includeantruntime="false"
+             destdir="${classes.dir}">
+         <classpath refid="compile.classpath"/>
+      </javac>
+   </target>
+
+
+
+
+   <target name="build.java.client" depends="prepare">
+	<javac srcdir="${src.dir}/java/client"
+		includeantruntime="false"
+		destdir="${classes.dir}">
+		<classpath refid="compile.classpath"/>
+	</javac>
+   </target>
+
+	<target name="tmp.client" depends="prepare">
+		<java classname="${Main-Class-CLIENT_TESTING}" fork="yes">
+			<classpath refid="compile.classpath"/>
+		</java>
+	</target>
+
+   <target name="execute.java" depends="build.java"
+           description="Start program">
+         <echo message="user.dir is: ${user.dir}"/>
+         <echo message="command line execute: java -cp classes:lib/gson.jar movies.server.test" />
+         <java classname="${Main-Class-SERVER_TESTING}" fork="yes">
+           <classpath refid="compile.classpath"/>
+         </java>
+   </target>
+
+<!-- ####################### Modified by Kyler ############### -->
+
+	<target name="execute.java.client" depends="build.java.client"
+		description="Start the client">
+		<echo message="Running client..."/>
+		<java classname="${Client-Main}" fork="yes">
+			<classpath refid="compile.classpath"/>
+		</java>
+	</target>
+
+	<target name="execute.java.server" depends="build.java"
+		description="Start server">
+		<echo message="Running server..."/>
+         	<java classname="${Server-Main}" fork="yes">
+           		<classpath refid="compile.classpath"/>
+         	</java>
+	</target>
+
+
+        <target name="execute.java.server.test" depends="build.java"
+                description="Start server">
+                <echo message="Running server..."/>
+                <java classname="${Main-Class-SERVER_TESTING}" fork="yes">
+                        <classpath refid="compile.classpath"/>
+                </java>
+        </target>
+
+ <target name="prepare.all">
+      <mkdir dir="${classes.dir}"/>
+      <mkdir dir="${dist.dir}" />
+      <mkdir dir="${obj.dir}" />
+      <if>
+         <isset property="env.USERNAME"/>
+         <then>
+            <echo message="detected username is: ${env.USERNAME}"/>
+         </then>
+      <elseif>
+         <isset property="env.USER"/>
+         <then>
+            <echo message="detected user is: ${env.USER}"/>
+         </then>
+      </elseif>
+      </if>
+      <echo message="host name is: ${os.name}"/>
+      <echo message="host arch is: ${os.arch}"/>
+      <echo message="host version is: ${os.version}"/>
+      <echo message="base directory is: ${basedir}"/>
+
+      <!-- Platform identification -->
+      <condition property="build.host.islinux">
+        <and>
+          <os family="unix" />
+          <not>
+            <contains string="${os.name}" substring="mac"
+                      casesensitive="false" />
+          </not>
+        </and>
+      </condition>
+      <condition property="build.host.platform" value="linux">
+        <isset property="build.host.islinux" />
+      </condition>
+
+      <condition property="build.host.ismac">
+        <and>
+          <os family="unix" />
+          <contains string="${os.name}" substring="mac" casesensitive="false"/>
+        </and>
+      </condition>
+      <condition property="build.host.platform" value="mac">
+        <isset property="build.host.ismac" />
+      </condition>
+
+      <fail unless="build.host.platform"
+            message="Building on ${os.name} is not supported" />
+      <echo message="build.host.platform is: ${build.host.platform}"/>
+      <if>
+         <isset property="build.host.ismac"/>
+         <then>
+            <echo message="detected a mac host"/>
+            <property name="cxxflag" value="-std=c++14"/>
+            <property name="includepath" value="/opt/local/include:/usr/local/include"/>
+            <property name="client.lib.path" value="/opt/local/lib"/>
+            <property name="client.lib.list" value="c++,fltk,stdc++,jsonrpccpp"/>
+         </then>
+      <elseif>
+         <isset property="build.host.islinux"/>
+         <then>
+            <echo message="detected a linux host"/>
+            <property name="cxxflag" value="-std=c++14"/>
+            <property name="includepath" value="/usr/include/jsoncpp"/>
+            <property name="client.lib.path" value="/usr/local/lib"/>
+            <property name="client.lib.list" value="jsonrpccpp-client,jsonrpccpp-common,microhttpd,jsoncpp,fltk,pthread,stdc++"/>
+         </then>
+      </elseif>
+      <else>
+         <echo message="failed to detect a host I know how to build on"/>
+      </else>
+   </if>
+   </target>
+
+
+   <target name="build.cpp" depends="prepare.all">
+      <taskdef resource="cpptasks.tasks"/>
+      <cc outtype="executable" subsystem="console"
+          outfile="${dist.dir}/movieClient"
+          objdir="${obj.dir}">
+         <compilerarg value="${cxxflag}"/>
+         <includepath>
+            <pathelement path="${includepath}"/>
+         </includepath>
+         <libset dir="${client.lib.path}" libs="${client.lib.list}"/>
+         <fileset dir="${src.dir}/cpp" includes="MovieClientGui.cpp, MovieClient.cpp"/>
+      </cc>
+   </target>
+
+
+   <target name="build.client" depends="prepare.all">
+     <taskdef resource="cpptasks.tasks"/> 
+     <cc outtype="executable" subsystem="console"
+          outfile="${dist.dir}/movieClient"
+          objdir="${obj.dir}">
+         <compilerarg value="${cxxflag}"/>
+         <includepath>
+            <pathelement path="${includepath}"/>
+         </includepath>
+         <libset dir="${client.lib.path}" libs="${client.lib.list}"/>
+         <fileset dir="${src.dir}/cpp" includes="MovieClient.cpp, MovieClient.cpp"/>
+      </cc>
+   </target>
+
+<!-- ###################### End modifications ############### -->
+
+   <target name="clean">
+     <delete dir="${classes.dir}"/>
+     <delete dir="${obj.dir}"/>
+     <delete dir="${dist.dir}"/>
+     <delete dir="libjson-rpc-cpp"/>
+   </target>
+
+</project>

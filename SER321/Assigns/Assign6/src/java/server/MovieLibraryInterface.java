@@ -1,4 +1,4 @@
-package movie.server;
+package assign6.movie.server;
 
 import com.google.gson.JsonObject;
 import edu.asu.ser.jsonrpc.common.JsonRpcException;
