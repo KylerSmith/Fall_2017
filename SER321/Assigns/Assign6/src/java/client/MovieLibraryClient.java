@@ -27,7 +27,7 @@ import assign6.movie.server.MovieDescription;
  * Or, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,USA
  * <p/>
- * Purpose: Proxy for the MovieLibrary class
+ * Purpose: Client stub
  * <p/>
  * @author Kyler Smith (ksmith91@asu.edu) CIDSE - Software Engineering,
  *                        ASU at the Polytechnic campus
@@ -102,7 +102,7 @@ public class MovieLibraryClient extends Object {
 		} else if(open.equalsIgnoreCase("add")) {
 			/** Have proxy add a movie */
 			System.out.println("Add selected.");
-	
+			
 		} else {
 			System.out.println("Unrecognized command.");
 		}
