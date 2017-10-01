@@ -38,7 +38,7 @@
    <property name="classes.dir" value="./classes" />
    <property name="lib.dir" value="./lib" />
    <property name="Main-Class-SERVER_TESTING" value="movie.server.test"/>
-   <property name="Main-Class-CLIENT_TESTING" value="assign6.movie.client.MovieLibraryClient"/>
+   <property name="Main-Class-client-gui" value="assign6.movie.client.MovieLibraryClientGUI"/>
    <property name="Client-Main" value="assign6.movie.client.MovieLibraryClient"/>
    <property name="Server-Main" value="assign6.movie.server.MovieLibraryServer"/>
    <property name="dist.dir" value="bin"/>
@@ -158,11 +158,11 @@
 		</java>
 	</target>
 
-   <target name="execute.java" depends="build.java"
+   <target name="execute.java.gui" depends="build.java.client"
            description="Start program">
          <echo message="user.dir is: ${user.dir}"/>
-         <echo message="command line execute: java -cp classes:lib/gson.jar movies.server.test" />
-         <java classname="${Main-Class-SERVER_TESTING}" fork="yes">
+         <echo message="Running class:: ${Main-Class-client-gui}" />
+         <java classname="${Main-Class-client-gui}" fork="yes">
            <classpath refid="compile.classpath"/>
          </java>
    </target>
